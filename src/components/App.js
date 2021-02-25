@@ -1,9 +1,17 @@
-import './App.css';
+import '../App.css';
+import React from 'react'
+import NavBar from './NavBar'
+import MainPage from './MainPage'
+
+
 
 function App() {
   return (
     <div className="App">
-      Hello
+      <header className="App-header">
+        <NavBar />
+        <MainPage />
+      </header>
     </div>
   );
 }
