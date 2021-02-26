@@ -6,3 +6,5 @@ const users = [
         password: "abc123"
     }
 ]
+
+export default users;

@@ -1,6 +1,7 @@
 import MaterialTable from "material-table";
 import players from '../players'
 import { Link } from 'react-router-dom'
+import Grid from '@material-ui/core/Grid'
 
 const PlayersTable = () => {
 
@@ -8,7 +9,11 @@ const PlayersTable = () => {
         {
           title: "Name",
           field: "LastName",
-          render: rowData => <Link to="/">{rowData.LastName}</Link>
+          render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.FirstName} ${rowData.LastName}`}</Link>
+        },
+        {
+          title: "Team",
+          field: "Team"
         },
         {
           title: "Position",
@@ -19,24 +24,50 @@ const PlayersTable = () => {
           field: "Games",
         },
         {
-          title: "Points",
+          title: "Points Per Game",
           field: "Points",
+          render: rowData => Math.round(rowData.Points / rowData.Games)
         },
         {
-            title: "Assists",
+          title: "Rebounds Per Game",
+          field: "Rebounds",
+          render: rowData => Math.round(rowData.Rebounds / rowData.Games)
+        },
+        {
+            title: "Assists Per Game",
             field: `Assists`,
-            render: rowData => rowData["Assists"] + 5
+            render: rowData => Math.round(rowData.Assists / rowData.Games)
+        },
+        {
+          title: "Steals Per Game",
+          field: "Steals",
+          render: rowData => Math.round(rowData.Steals / rowData.Games)
+        },
+        {
+          title: "Blocks Per Game",
+          field: "BlockedShots",
+          render: rowData => Math.round(rowData.BlockedShots / rowData.Games)
+        },
+        {
+          title: "Turnovers Per Game",
+          field: "Turnovers",
+          render: rowData => Math.round(rowData.Turnovers / rowData.Games)
         }
       ];
 
+      // const allPlayers = players.map((player) => {
+      //   return 
+      // })
+
 
     return (
-        <div className="w3-container w3-display-container w3-card-4 w3-display-middle">
-          <br></br>
-          <MaterialTable className="w3-display-middle"  title="Players" data={players} columns={columns} options={{ sorting: true }} />
-          <br></br>
-        </div>
-
+      <Grid container justify="center" alignItems="center" direction="column">
+        <Grid item xs={12} >
+            
+            <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+        
+        </Grid>
+      </Grid>
     )
 }
 

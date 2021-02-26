@@ -1,8 +1,10 @@
+import Grid from '@material-ui/core/Grid'
+
 const Welcome = () => {
     return (
-        <div>
+        <Grid container justify="center" alignItems="center" direction="column">
             Welcome!
-        </div>
+        </Grid>
     )
 }
 

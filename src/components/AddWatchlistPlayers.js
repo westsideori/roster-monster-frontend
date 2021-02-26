@@ -1,16 +1,16 @@
 import MaterialTable from "material-table";
 import players from '../players'
 import { Link } from 'react-router-dom'
-import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 
-const Watchlist = () => {
+const AddWatchlistPlayers = () => {
 
     const columns = [
         {
           title: "Name",
           field: "LastName",
-          render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.FirstName} ${rowData.LastName}`}</Link>
+          render: rowData => <Link to="/">{`${rowData.FirstName} ${rowData.LastName}`}</Link>
         },
         {
           title: "Team",
@@ -55,26 +55,21 @@ const Watchlist = () => {
           render: rowData => Math.round(rowData.Turnovers / rowData.Games)
         },
         {
-            title: "Remove from Watchlist",
+            title: "Add to Watchlist",
             field: "",
-            render: () => <Button>Remove</Button>
+            render: () => <Button>Add</Button>
         }
       ];
 
-      // const allPlayers = players.map((player) => {
-      //   return 
-      // })
-
 
     return (
-      <Grid container justify="center" alignItems="center" direction="column">
-        <Grid item xs={12} >
-            
-            <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
-        
+        <Grid container justify="center" alignItems="center" direction="column">
+          
+          <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+      
         </Grid>
-      </Grid>
+
     )
 }
 
-export default Watchlist;
+export default AddWatchlistPlayers;

@@ -37,6 +37,18 @@
   }
 } */
 
-a.w3-bar-item.w3-button.active {
-  background-color: sienna;
+a.active {
+  background-color: rgb(216, 101, 8);
 }
+
+a {
+  text-decoration: none;
+}
+
+/* .nav-links:hover {
+  font-size: xx-large;
+} */
+
+/* body {
+  overflow: visible;
+} */
