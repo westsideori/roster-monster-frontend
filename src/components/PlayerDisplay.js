@@ -68,7 +68,7 @@ const PlayerDisplay = () => {
                 </Grid>
             </Grid>
             <Grid container justify="center" alignItems="center" direction="column">
-                <MaterialTable title="" data={players.slice(0,1)} columns={columns} options={{ sorting: true }} />
+                <MaterialTable title="" data={players.slice(0,1)} columns={columns} options={{ sorting: true, search: false }} />
             </Grid> 
             
         </Grid>

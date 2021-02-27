@@ -1,23 +1,35 @@
 import MaterialTable from "material-table";
-import players from '../players'
+// import players from '../players'
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
+import {useEffect, useState} from 'react'
 
 const PlayersTable = () => {
+
+  const [players, setPlayers] = useState([])
+
+    useEffect(() => {
+      fetch(`http://localhost:4000/players`)
+        .then(resp => resp.json())
+        .then(playerData => {
+          setPlayers(playerData)
+        })
+    }, [])
+
 
     const columns = [
         {
           title: "Name",
-          field: "LastName",
-          render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.FirstName} ${rowData.LastName}`}</Link>
+          field: "name",
+          render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.name}`}</Link>
         },
         {
           title: "Team",
-          field: "Team"
+          field: "team"
         },
         {
           title: "Position",
-          field: "Position",
+          field: "position",
         },
         {
           title: "Games",
@@ -26,7 +38,16 @@ const PlayersTable = () => {
         {
           title: "Points Per Game",
           field: "Points",
-          render: rowData => Math.round(rowData.Points / rowData.Games)
+          customSort: (a, b) => (a.Points/a.Games) - (b.Points/b.Games),
+          render: rowData => {
+
+            if (rowData.Points) {
+              return Math.round(rowData.Points / rowData.Games)
+            } else {
+              return 0
+            }
+            
+          }
         },
         {
           title: "Rebounds Per Game",
@@ -52,6 +73,11 @@ const PlayersTable = () => {
           title: "Turnovers Per Game",
           field: "Turnovers",
           render: rowData => Math.round(rowData.Turnovers / rowData.Games)
+        },
+        {
+          title: "Fouls Per Game",
+          field: "PersonalFouls",
+          render: rowData => Math.round(rowData.PersonalFouls / rowData.Games)
         }
       ];
 
