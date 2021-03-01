@@ -37,7 +37,7 @@ function App() {
                 justify="center"
                 alignItems="flex-start"
                 spacing={10}>
-                <MainPage setCurrentUser={setCurrentUser}/>
+                <MainPage setCurrentUser={setCurrentUser} currentUser={currentUser}/>
             </Grid>
           </Grid>
       </ThemeProvider>

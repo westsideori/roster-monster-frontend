@@ -2,6 +2,7 @@ import RosterCard from './RosterCard'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import {Link} from 'react-router-dom'
 
 const RostersList = () => {
 
@@ -18,9 +19,11 @@ const RostersList = () => {
                 </Grid>
                 <Grid container item xs={4} justify="flex-end">
                     <Grid item>
-                        <Button variant="contained" color="primary">
-                            Create New Roster
-                        </Button>
+                        <Link to={`/users/1/rosters/new`}>
+                            <Button variant="contained" color="primary">
+                                Create New Roster
+                            </Button>
+                        </Link>
                     </Grid>
                 </Grid>
                 

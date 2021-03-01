@@ -1,10 +1,56 @@
 import Grid from '@material-ui/core/Grid'
 import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel';
+import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
-const NewScoring = () => {
+const NewScoring = ({selectedRoster, setSelectedRoster}) => {
+
+    const [formData, setFormData] = useState({
+        roster_id: selectedRoster.id,
+        points: 0,
+        rebounds: 0,
+        assists: 0,
+        steals: 0,
+        blocks: 0,
+        threes_made: 0,
+        turnovers: 0,
+        games_played: 0,
+        field_goals_made: 0,
+        field_goals_attempted: 0,
+        threes_attempted: 0,
+        free_throws_made: 0,
+        free_throws_attempted: 0
+    })
+
+    const [errors, setErrors] = useState([])
+
+    const history = useHistory()
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+          })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        fetch("http://localhost:3000/score_settings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((r) => r.json())
+          .then((data) => {
+            setSelectedRoster({...selectedRoster, score_setting: data})
+            history.push(`/users/${1}/rosters/${selectedRoster.id}`)
+          })
+    }
 
     const inputProps = {
         step: 0.1,
@@ -12,7 +58,7 @@ const NewScoring = () => {
 
     return (
         <Grid container justify="center" alignItems="center" direction="column">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Grid container >
                     <Grid container item xs={12} spacing={3} direction="column">
                         <Typography variant="h4">Set Scoring</Typography>
@@ -25,6 +71,8 @@ const NewScoring = () => {
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.points}
                             />
                         </Grid>
                         <Grid item>
@@ -36,6 +84,8 @@ const NewScoring = () => {
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.rebounds}
                             />
                         </Grid>
                         <Grid item>
@@ -47,6 +97,8 @@ const NewScoring = () => {
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.assists}
                             />
                         </Grid>
                         <Grid item>
@@ -58,6 +110,8 @@ const NewScoring = () => {
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.steals}
                             />
                         </Grid>
                         <Grid item>
@@ -69,6 +123,8 @@ const NewScoring = () => {
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.blocks}
                             />
                         </Grid>
                         <Grid item>
@@ -76,10 +132,12 @@ const NewScoring = () => {
                                 3-Pointers Made
                             </InputLabel>
                             <Input
-                                name="threes"
+                                name="threes_made"
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.threes_made}
                             />
                         </Grid>
                         <Grid item>
@@ -91,6 +149,8 @@ const NewScoring = () => {
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.turnovers}
                             />
                         </Grid>
                         <Grid item>
@@ -98,10 +158,12 @@ const NewScoring = () => {
                                 Games Played
                             </InputLabel>
                             <Input
-                                name="games"
+                                name="games_played"
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.games_played}
                             />
                         </Grid>
                         <Grid item>
@@ -109,10 +171,12 @@ const NewScoring = () => {
                                 FG Made
                             </InputLabel>
                             <Input
-                                name="fgMade"
+                                name="field_goals_made"
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.field_goals_made}
                             />
                         </Grid>
                         <Grid item>
@@ -120,10 +184,12 @@ const NewScoring = () => {
                                 FG Attempted
                             </InputLabel>
                             <Input
-                                name="fgAttempted"
+                                name="field_goals_attempted"
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.field_goals_attempted}
                             />
                         </Grid>
                         <Grid item>
@@ -131,10 +197,12 @@ const NewScoring = () => {
                                 3-Pointers Attempted
                             </InputLabel>
                             <Input
-                                name="threesAttempted"
+                                name="threes_attempted"
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.threes_attempted}
                             />
                         </Grid>
                         <Grid item>
@@ -142,10 +210,12 @@ const NewScoring = () => {
                                 FT Made
                             </InputLabel>
                             <Input
-                                name="ftMade"
+                                name="free_throws_made"
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.free_throws_made}
                             />
                         </Grid>
                         <Grid item>
@@ -153,14 +223,17 @@ const NewScoring = () => {
                                 FT Attempted
                             </InputLabel>
                             <Input
-                                name="ftAttempted"
+                                name="free_throws_attempted"
                                 variant="outlined"
                                 type="number"
                                 inputProps={inputProps}
+                                onChange={handleChange}
+                                value={formData.free_throws_attempted}
                             />
                         </Grid>
                         <Grid item>
                             <Button
+                                type="submit"
                                 variant="contained"
                                 color="primary">
                                     Save

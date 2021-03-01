@@ -4,7 +4,6 @@ import ToolBar from '@material-ui/core/ToolBar'
 import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles({
     rightToolbar: {

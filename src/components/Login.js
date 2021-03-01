@@ -3,10 +3,9 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import React, { useState } from "react";
-import users from '../users'
 import { useHistory } from 'react-router-dom';
 
-const Login = ({setCurrentUser}) => {
+const Login = ({setCurrentUser, currentUser}) => {
 
     const history = useHistory()
 
@@ -21,8 +20,16 @@ const Login = ({setCurrentUser}) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        setCurrentUser(users[0])
-        history.push(`/users/${users[0].id}/rosters`)
+        fetch("http://localhost:3000/login", {
+            method: "POST",
+        })
+            .then((r) => r.json())
+            .then((user) => {
+                // response -> user saved in state
+                setCurrentUser(user)
+                history.push(`/users/${user.id}/rosters`)
+            });
+        
     }
 
     return (
