@@ -5,7 +5,7 @@ import MainPage from './MainPage'
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 
 const theme = createMuiTheme({
   palette: {
@@ -22,14 +22,31 @@ const theme = createMuiTheme({
 
 function App() {
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log(token)
+      fetch("http://localhost:3000/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((r) => r.json())
+        .then((user) => {
+          // set the user in state
+          setCurrentUser(user)
+        });
+    }
+  }, []);
 
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
           <Grid container spacing={10}>
             <Grid item xs={12}>
-              <NavBar currentUser={currentUser} />
+              <NavBar setCurrentUser={setCurrentUser} currentUser={currentUser} />
             </Grid>
             <Grid
                 container

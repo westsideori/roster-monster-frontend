@@ -1,10 +1,10 @@
 import MaterialTable from "material-table";
-import players from '../players'
+// import players from '../players'
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
-const Watchlist = () => {
+const Watchlist = ({players}) => {
 
     const columns = [
         {

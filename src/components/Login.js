@@ -9,33 +9,43 @@ const Login = ({setCurrentUser, currentUser}) => {
 
     const history = useHistory()
 
+    const [errors, setErrors] = useState([])
+
     const [formData, setFormData] = useState({
         username: "",
         password: "",
-      });
+      })
 
-    function handleChange(e) {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    function handleSubmit(e) {
+    const handleLogin = (e) => {
         e.preventDefault();
         fetch("http://localhost:3000/login", {
-            method: "POST",
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
         })
             .then((r) => r.json())
-            .then((user) => {
-                // response -> user saved in state
-                setCurrentUser(user)
-                history.push(`/users/${user.id}/rosters`)
+            .then((data) => {
+                if (data.errors) {
+                    // set errors to show errors in the form
+                    setErrors(data.errors);
+                } else {
+                    // use the response to set state
+                    const { user, token } = data;
+                    localStorage.setItem("token", token);
+                    setCurrentUser(user);
+                    history.push('/rosters');
+                }
             });
-        
     }
 
     return (
         <Grid container justify="center" alignItems="center" direction="column">
                 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLogin}>
             
                 <Grid container >
                 
@@ -61,6 +71,17 @@ const Login = ({setCurrentUser, currentUser}) => {
                                 value={formData.password}
                                 onChange={handleChange}
                             />
+                        </Grid>
+                        <Grid container xs={4} item>
+                            {errors.map((error) => {
+                                return (
+                                    <Grid item>
+                                        <Typography variant="h6">
+                                            {error}
+                                        </Typography>
+                                    </Grid>
+                                )
+                            })}
                         </Grid>
                         <Grid item>
                             <Button

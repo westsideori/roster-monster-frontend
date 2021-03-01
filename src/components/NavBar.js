@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import ToolBar from '@material-ui/core/ToolBar'
 import Typography from '@material-ui/core/Typography'
@@ -12,7 +12,17 @@ const useStyles = makeStyles({
     },
 })
 
-const NavBar = ({currentUser}) => {
+const NavBar = ({currentUser, setCurrentUser}) => {
+
+    const history = useHistory()
+
+    function logout() {
+        // remove the token
+        localStorage.removeItem("token");
+        // clear currentUser
+        setCurrentUser(null)
+        history.push('/')
+    }
 
     const classes = useStyles()
     
@@ -43,7 +53,7 @@ const NavBar = ({currentUser}) => {
                     </NavLink>
                     {currentUser ? (
                         <>
-                            <NavLink className={classes.rightToolbar} to="/users/:id/rosters">
+                            <NavLink className={classes.rightToolbar} to="/rosters">
                                 <MenuItem color="secondary">
                                     <Typography variant="h6">
                                         {currentUser.username}'s Rosters
@@ -51,7 +61,7 @@ const NavBar = ({currentUser}) => {
                                 </MenuItem>
                             </NavLink>
                             <NavLink className={classes.rightToolbar} to="/">
-                                <MenuItem color="secondary">
+                                <MenuItem onClick={logout} color="secondary">
                                     <Typography variant="h6">
                                         Logout
                                     </Typography>

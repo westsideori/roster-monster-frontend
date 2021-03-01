@@ -4,7 +4,15 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import {Link} from 'react-router-dom'
 
-const RostersList = () => {
+const RostersList = ({currentUser}) => {
+
+    const rosters = currentUser.rosters.map((roster) => {
+        return (
+            <Grid item xs={4} key={roster.id}>
+                <RosterCard id={roster.id} roster={roster} currentUser={currentUser}/>
+            </Grid>
+        )
+    })
 
 
     return (
@@ -19,7 +27,7 @@ const RostersList = () => {
                 </Grid>
                 <Grid container item xs={4} justify="flex-end">
                     <Grid item>
-                        <Link to={`/users/1/rosters/new`}>
+                        <Link to={`/rosters/new`}>
                             <Button variant="contained" color="primary">
                                 Create New Roster
                             </Button>
@@ -28,39 +36,7 @@ const RostersList = () => {
                 </Grid>
                 
                 <Grid container spacing={4}>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <RosterCard />
-                    </Grid>
+                    {rosters}
                 </Grid>
             </Grid>
             

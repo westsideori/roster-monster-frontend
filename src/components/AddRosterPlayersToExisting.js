@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import { useHistory, useParams } from 'react-router-dom'
 import { useState } from "react";
 
-const AddRosterPlayers = ({players}) => {
+const AddRosterPlayersToExisting = ({players}) => {
 
   
 
@@ -160,7 +160,7 @@ const AddRosterPlayers = ({players}) => {
     return (
         <Grid container justify="center" alignItems="center" direction="column">
       
-          <Button variant="contained" onClick={() => history.push(`/rosters/${id}/scoring/new`)}>
+          <Button variant="contained" onClick={() => history.push(`/rosters/${id}`)}>
             Save
           </Button>
           <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
@@ -170,4 +170,4 @@ const AddRosterPlayers = ({players}) => {
     )
 }
 
-export default AddRosterPlayers;
+export default AddRosterPlayersToExisting;

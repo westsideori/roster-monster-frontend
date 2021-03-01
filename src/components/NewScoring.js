@@ -4,12 +4,14 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
-const NewScoring = ({selectedRoster, setSelectedRoster}) => {
+const NewScoring = () => {
+
+    const {id} = useParams()
 
     const [formData, setFormData] = useState({
-        roster_id: selectedRoster.id,
+        roster_id: id,
         points: 0,
         rebounds: 0,
         assists: 0,
@@ -47,8 +49,7 @@ const NewScoring = ({selectedRoster, setSelectedRoster}) => {
         })
           .then((r) => r.json())
           .then((data) => {
-            setSelectedRoster({...selectedRoster, score_setting: data})
-            history.push(`/users/${1}/rosters/${selectedRoster.id}`)
+            history.push(`/rosters/${id}`)
           })
     }
 

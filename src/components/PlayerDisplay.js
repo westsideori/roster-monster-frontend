@@ -1,6 +1,6 @@
 import Grid from '@material-ui/core/Grid'
 import MaterialTable from "material-table";
-import players from '../players'
+// import players from '../players'
 import { Typography } from '@material-ui/core';
 
 

@@ -7,10 +7,10 @@ import { useHistory } from 'react-router-dom'
 
 
 
-const NewRoster = ({selectedRoster, setSelectedRoster}) => {
+const NewRoster = ({currentUser}) => {
 
     const [formData, setFormData] = useState({
-        user_id: 1,
+        user_id: currentUser.id,
         name: "",
         league: "",
         season: "",
@@ -39,11 +39,11 @@ const NewRoster = ({selectedRoster, setSelectedRoster}) => {
         })
           .then((r) => r.json())
           .then((data) => {
-           
-            console.log(data)
-            setSelectedRoster(data)
-        
-            history.push(`/users/${1}/rosters/${data.id}/players/add`)
+            if (data.errors) {
+                setErrors(data.errors)
+            } else {
+                history.push(`/rosters/${data.id}/players/add`)
+            }
           })
     }
 
@@ -88,6 +88,17 @@ const NewRoster = ({selectedRoster, setSelectedRoster}) => {
                                 onChange={handleChange}
                                 value={formData.slogan}
                             />
+                        </Grid>
+                        <Grid container xs={4} item>
+                            {errors.map((error) => {
+                                return (
+                                    <Grid item>
+                                        <Typography variant="h6">
+                                            {error}
+                                        </Typography>
+                                    </Grid>
+                                )
+                            })}
                         </Grid>
                         <Grid item>
                             <Button

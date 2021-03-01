@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { useState } from 'react';
 import {Link} from 'react-router-dom'
 
-const RosterCard = () => {
+const RosterCard = ({roster, currentUser}) => {
 
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl);
@@ -20,6 +20,8 @@ const RosterCard = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    
 
     return (
         
@@ -42,18 +44,18 @@ const RosterCard = () => {
                                 Delete
                             </MenuItem>
                         </Menu>
-                    <Link to='/'>
+                    <Link to={`/rosters/${roster.id}`}>
                         <Typography variant="h5" component="h2">
-                            Team Name
+                            {roster.name}
                         </Typography>
                         <Typography color="textSecondary">
-                            Season: 202X
+                            {roster.season}
                         </Typography>
                         <Typography  color="textSecondary" gutterBottom>
-                            League Name
+                            {roster.league}
                         </Typography>
                         <Typography variant="body2" component="p">
-                            "Slogan"
+                            {roster.slogan}
                         </Typography>
                     </Link>
                     </CardContent>

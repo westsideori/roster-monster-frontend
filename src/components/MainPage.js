@@ -9,6 +9,7 @@ import RostersList from './RostersList'
 import NewRoster from './NewRoster'
 import NewScoring from './NewScoring'
 import AddRosterPlayers from './AddRosterPlayers'
+import AddRosterPlayersToExisting from './AddRosterPlayersToExisting'
 import RosterDisplay from './RosterDisplay'
 import PlayerDisplay from './PlayerDisplay'
 import AddWatchlistPlayers from './AddWatchlistPlayers'
@@ -38,7 +39,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                         })
         }, [])
 
-        const [selectedRoster, setSelectedRoster] = useState(null)
+        console.log(playerPredictions)
 
         return (
         
@@ -55,7 +56,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         
                                 </Route>
                                 <Route exact path='/signup'>
-                                        <Signup/>
+                                        <Signup setCurrentUser={setCurrentUser} currentUser={currentUser}/>
                                 </Route>
                                 <Route exact path='/login'>
                                         <Login setCurrentUser={setCurrentUser} currentUser={currentUser}/>
@@ -63,27 +64,32 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                 <Route exact path='/news'>
                                         <News/>
                                 </Route>
-                                <Route exact path='/users/:id/rosters'>
-                                        <RostersList />
+                                <Route exact path='/rosters'>
+                                        <RostersList currentUser={currentUser} />
                                 </Route>
-                                <Route exact path="/users/:id/rosters/new">
+                                <Route exact path="/rosters/new">
                                         
-                                        <NewRoster selectedRoster={selectedRoster} setSelectedRoster={setSelectedRoster}/>
-                                        
-                                </Route>
-                                <Route exact path="/users/:id/rosters/:rostid/scoring/new">
-                                        
-                                        <NewScoring selectedRoster={selectedRoster} setSelectedRoster={setSelectedRoster}/>
+                                        <NewRoster currentUser={currentUser}/>
                                         
                                 </Route>
-                                <Route exact path="/users/:id/rosters/:rostid/players/add">
+                                <Route exact path="/rosters/:id/scoring/new">
                                         
-                                        <AddRosterPlayers selectedRoster={selectedRoster} setSelectedRoster={setSelectedRoster} players={players}/>
+                                        <NewScoring currentUser={currentUser}/>
                                         
                                 </Route>
-                                <Route exact path="/users/:id/rosters/:rostid/">
+                                <Route exact path="/rosters/:id/players/add">
                                         
-                                        <RosterDisplay selectedRoster={selectedRoster} players={playerPredictions}/>
+                                        <AddRosterPlayers currentUser={currentUser} players={players}/>
+                                        
+                                </Route>
+                                <Route exact path="/rosters/:id/players/add_new">
+                                        
+                                        <AddRosterPlayersToExisting currentUser={currentUser} players={players}/>
+                                        
+                                </Route>
+                                <Route exact path="/rosters/:id">
+                                        
+                                        <RosterDisplay currentUser={currentUser} playerPredictions={playerPredictions}/>
                                         
                                 </Route>
                                 <Route exact path="/players/:id/">
@@ -91,14 +97,14 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         <PlayerDisplay />
                                         
                                 </Route>
-                                <Route exact path="/users/:id/watchlist/add">
+                                <Route exact path="/watchlist/add">
                                         
                                         <AddWatchlistPlayers />
                                         
                                 </Route>
-                                <Route exact path="/users/:id/watchlist">
+                                <Route exact path="/watchlist">
                                         
-                                        <Watchlist />
+                                        <Watchlist currentUser={currentUser} players={players}/>
                                         
                                 </Route>
                         </Switch>
