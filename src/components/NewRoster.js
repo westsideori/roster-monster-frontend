@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 
 
-const NewRoster = ({currentUser}) => {
+const NewRoster = ({currentUser, handleNewRoster}) => {
 
     const [formData, setFormData] = useState({
         user_id: currentUser.id,
@@ -42,6 +42,7 @@ const NewRoster = ({currentUser}) => {
             if (data.errors) {
                 setErrors(data.errors)
             } else {
+                handleNewRoster(data)
                 history.push(`/rosters/${data.id}/players/add`)
             }
           })

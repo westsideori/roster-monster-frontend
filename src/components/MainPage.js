@@ -20,6 +20,7 @@ import { useState, useEffect } from 'react'
 const MainPage = ({setCurrentUser, currentUser}) => {
 
         const [players, setPlayers] = useState([])
+        const [userRosters, setUserRosters] = useState([])
 
         const [playerPredictions, setPlayerPredictions] = useState([])
 
@@ -38,6 +39,51 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                 setPlayerPredictions(predictionData)
                         })
         }, [])
+
+        useEffect(() => {
+                if (currentUser) {
+                        const token = localStorage.getItem("token")
+                        fetch(`http://localhost:3000/users/${currentUser.id}/rosters`, {
+                                headers: {
+                                Authorization: `Bearer ${token}`,
+                                },
+                        })
+                                .then(r => r.json())
+                                .then((rosters) => {
+                                        setUserRosters(rosters)
+                                })
+                }
+                
+        }, [currentUser])
+
+        // useEffect(() => {
+        //         if (currentUser) {
+        //                 fetch(`http://localhost:3000/users/${currentUser.id}/rosters`)
+        //                         .then(r => r.json())
+        //                         .then((rosters) => {
+        //                                 setUserRosters(rosters)
+        //                         })
+        //         } else {
+
+        //                 const token = localStorage.getItem("token");
+        //                 if (token) {
+        //                         console.log(token)
+        //                 fetch(`http://localhost:3000/me`, {
+        //                         headers: {
+        //                         Authorization: `Bearer ${token}`,
+        //                         },
+        //                 })
+        //                         .then((r) => r.json())
+        //                         .then((user) => {
+        //                         // set the user in state
+        //                         setCurrentUser(user)
+        //                         });
+        //                 }
+        // }, [])
+
+        const handleNewRoster = (roster) => {
+                setUserRosters([...userRosters, roster])
+        }
 
         console.log(playerPredictions)
 
@@ -65,11 +111,11 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         <News/>
                                 </Route>
                                 <Route exact path='/rosters'>
-                                        <RostersList currentUser={currentUser} />
+                                        <RostersList currentUser={currentUser} userRosters={userRosters} />
                                 </Route>
                                 <Route exact path="/rosters/new">
                                         
-                                        <NewRoster currentUser={currentUser}/>
+                                        <NewRoster currentUser={currentUser} handleNewRoster={handleNewRoster}/>
                                         
                                 </Route>
                                 <Route exact path="/rosters/:id/scoring/new">

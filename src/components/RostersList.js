@@ -4,9 +4,9 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import {Link} from 'react-router-dom'
 
-const RostersList = ({currentUser}) => {
+const RostersList = ({currentUser, userRosters}) => {
 
-    const rosters = currentUser.rosters.map((roster) => {
+    const rosters = userRosters.map((roster) => {
         return (
             <Grid item xs={4} key={roster.id}>
                 <RosterCard id={roster.id} roster={roster} currentUser={currentUser}/>

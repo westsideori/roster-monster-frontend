@@ -41,6 +41,30 @@ function App() {
     }
   }, []);
 
+  // useEffect(() => {
+  //   // GET /me
+  //   const token = localStorage.getItem("token")
+  //   console.log(token)
+  //   fetch("http://localhost:3000/me", {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((r) => {
+  //       return r.json().then((data) => {
+  //         if (r.ok) {
+  //           return data;
+  //         } else {
+  //           throw data;
+  //         }
+  //       });
+  //     })
+  //     .then((user) => {
+  //       // response => set user in state
+  //       setCurrentUser(user);
+  //     });
+  // }, []);
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
