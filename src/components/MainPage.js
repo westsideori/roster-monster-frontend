@@ -6,6 +6,7 @@ import Signup from './Signup'
 import Login from './Login'
 import News from './News'
 import RostersList from './RostersList'
+import EditRosterDetails from './EditRosterDetails'
 import NewRoster from './NewRoster'
 import NewScoring from './NewScoring'
 import AddRosterPlayers from './AddRosterPlayers'
@@ -111,7 +112,12 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         <News/>
                                 </Route>
                                 <Route exact path='/rosters'>
-                                        <RostersList currentUser={currentUser} userRosters={userRosters} />
+                                        <RostersList currentUser={currentUser} userRosters={userRosters} setUserRosters={setUserRosters}/>
+                                </Route>
+                                <Route exact path="/rosters/:id/edit">
+                                        
+                                        <EditRosterDetails currentUser={currentUser} />
+                                        
                                 </Route>
                                 <Route exact path="/rosters/new">
                                         

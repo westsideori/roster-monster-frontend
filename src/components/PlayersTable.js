@@ -5,9 +5,6 @@ import Grid from '@material-ui/core/Grid'
 
 const PlayersTable = ({players}) => {
 
-  
-
-
     const columns = [
         {
           title: "Name",
@@ -43,38 +40,88 @@ const PlayersTable = ({players}) => {
         {
           title: "Rebounds Per Game",
           field: "Rebounds",
-          render: rowData => Math.round(rowData.Rebounds / rowData.Games)
+          customSort: (a, b) => (a.Rebounds/a.Games) - (b.Rebounds/b.Games),
+          render: rowData => {
+
+            if (rowData.Rebounds) {
+              return Math.round(rowData.Rebounds / rowData.Games)
+            } else {
+              return 0
+            }
+            
+          }
         },
         {
-            title: "Assists Per Game",
-            field: `Assists`,
-            render: rowData => Math.round(rowData.Assists / rowData.Games)
+          title: "Assists Per Game",
+          field: `Assists`,
+          customSort: (a, b) => (a.Assists/a.Games) - (b.Assists/b.Games),
+          render: rowData => {
+
+            if (rowData.Assists) {
+              return Math.round(rowData.Assists / rowData.Games)
+            } else {
+              return 0
+            }
+            
+          }
         },
         {
           title: "Steals Per Game",
           field: "Steals",
-          render: rowData => Math.round(rowData.Steals / rowData.Games)
+          customSort: (a, b) => (a.Steals/a.Games) - (b.Steals/b.Games),
+          render: rowData => {
+
+            if (rowData.Steals) {
+              return Math.round(rowData.Steals / rowData.Games)
+            } else {
+              return 0
+            }
+            
+          }
         },
         {
           title: "Blocks Per Game",
           field: "BlockedShots",
-          render: rowData => Math.round(rowData.BlockedShots / rowData.Games)
+          customSort: (a, b) => (a.BlockedShots/a.Games) - (b.BlockedShots/b.Games),
+          render: rowData => {
+
+            if (rowData.BlockedShots) {
+              return Math.round(rowData.BlockedShots / rowData.Games)
+            } else {
+              return 0
+            }
+            
+          }
         },
         {
           title: "Turnovers Per Game",
           field: "Turnovers",
-          render: rowData => Math.round(rowData.Turnovers / rowData.Games)
+          customSort: (a, b) => (a.Turnovers/a.Games) - (b.Turnovers/b.Games),
+          render: rowData => {
+
+            if (rowData.Turnovers) {
+              return Math.round(rowData.Turnovers / rowData.Games)
+            } else {
+              return 0
+            }
+            
+          }
         },
         {
           title: "Fouls Per Game",
           field: "PersonalFouls",
-          render: rowData => Math.round(rowData.PersonalFouls / rowData.Games)
+          customSort: (a, b) => (a.PersonalFouls/a.Games) - (b.PersonalFouls/b.Games),
+          render: rowData => {
+
+            if (rowData.PersonalFouls) {
+              return Math.round(rowData.PersonalFouls / rowData.Games)
+            } else {
+              return 0
+            }
+            
+          }
         }
       ];
-
-      // const allPlayers = players.map((player) => {
-      //   return 
-      // })
 
 
     return (

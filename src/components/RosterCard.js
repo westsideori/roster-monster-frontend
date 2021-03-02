@@ -6,10 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 import { useState } from 'react';
-import {Link} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const RosterCard = ({roster, currentUser}) => {
 
+    const history = useHistory()
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl);
 
@@ -18,8 +19,23 @@ const RosterCard = ({roster, currentUser}) => {
     };
 
     const handleClose = () => {
+
         setAnchorEl(null);
     };
+
+    const handleDelete = (id) => {
+        fetch(`http://localhost:3000/rosters/${id}`, {
+            method: 'DELETE'
+        })
+            .then((data) => {
+                history.push('/rosters')
+            })
+            
+    };
+
+    const handleEdit = () => {
+        history.push(`/rosters/${roster.id}/edit`)
+    }
 
     
 
@@ -37,10 +53,10 @@ const RosterCard = ({roster, currentUser}) => {
                             open={open}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>
+                            <MenuItem onClick={handleEdit}>
                                 Edit Team Details
                             </MenuItem>
-                            <MenuItem onClick={handleClose}>
+                            <MenuItem onClick={() => handleDelete(roster.id)}>
                                 Delete
                             </MenuItem>
                         </Menu>

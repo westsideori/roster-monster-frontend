@@ -2,17 +2,20 @@ import RosterCard from './RosterCard'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-const RostersList = ({currentUser, userRosters}) => {
+const RostersList = ({currentUser, userRosters, setUserRosters}) => {
+
 
     const rosters = userRosters.map((roster) => {
         return (
             <Grid item xs={4} key={roster.id}>
-                <RosterCard id={roster.id} roster={roster} currentUser={currentUser}/>
+                <RosterCard id={roster.id} roster={roster} currentUser={currentUser} deleteRoster={deleteRoster}/>
             </Grid>
         )
     })
+
+    const 
 
 
     return (
