@@ -59,48 +59,8 @@ const MainPage = ({setCurrentUser, currentUser}) => {
         }, [currentUser])
 
         useEffect(() => {
-                console.log(currentUser)
-                if (currentUser) {
-                        const token = localStorage.getItem("token")
-                        if (token) {
-                                fetch(`http://localhost:3000/users/${currentUser.id}/watchlist`, {
-                                        headers: {
-                                                Authorization: `Bearer ${token}`
-                                        },
-                                })
-                                        .then(r => r.json())
-                                        .then((watchlist) => {
-                                                console.log(watchlist)
-                                                setUserWatchlist(watchlist)
-                                        })
-                        } 
-                }      
+                handleWatchlistChanges()
         }, [currentUser])
-
-        // useEffect(() => {
-        //         if (currentUser) {
-        //                 fetch(`http://localhost:3000/users/${currentUser.id}/rosters`)
-        //                         .then(r => r.json())
-        //                         .then((rosters) => {
-        //                                 setUserRosters(rosters)
-        //                         })
-        //         } else {
-
-        //                 const token = localStorage.getItem("token");
-        //                 if (token) {
-        //                         console.log(token)
-        //                 fetch(`http://localhost:3000/me`, {
-        //                         headers: {
-        //                         Authorization: `Bearer ${token}`,
-        //                         },
-        //                 })
-        //                         .then((r) => r.json())
-        //                         .then((user) => {
-        //                         // set the user in state
-        //                         setCurrentUser(user)
-        //                         });
-        //                 }
-        // }, [])
 
         const handleNewRoster = (roster) => {
                 setUserRosters([...userRosters, roster])
@@ -129,33 +89,23 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                 
         }
 
-        const removePlayerFromWatchlist = (rowId) => {
-                const token = localStorage.getItem("token")
-                if (token) {
-                        let playerToDelete = userWatchlist.watchlist_players.filter((wp) => {
-                                return wp.player_id === rowId && wp.watchlist_id === userWatchlist.id
-                        })
-                
-                        const [player] = playerToDelete
-                        
-                        fetch(`http://localhost:3000/watchlist_players/${player.id}`, {
-                                method: 'DELETE',
-                                headers: {
-                                        Authorization: `Bearer ${token}`
-                                }
-                        })
-                                .then(console.log('Removed'))
-                }
+        const handleWatchlistChanges = () => {
+                if (currentUser) {
+                        const token = localStorage.getItem("token")
+                        if (token) {
+                                fetch(`http://localhost:3000/users/${currentUser.id}/watchlist`, {
+                                        headers: {
+                                                Authorization: `Bearer ${token}`
+                                        },
+                                })
+                                        .then(r => r.json())
+                                        .then((watchlist) => {
+                                                console.log(watchlist)
+                                                setUserWatchlist(watchlist)
+                                        })
+                        } 
+                }      
         }
-            
-        // const handleRemove = (apiId) => {
-        //         let filteredIds = playerIds.filter((id) => {
-        //                 return id !== apiId
-        //         })
-        //         setPlayerIds(filteredIds)
-        // }
-
-        console.log(playerPredictions)
 
         return (
         
@@ -168,7 +118,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                 </Route>
                                 <Route exact path='/players'>
                                         
-                                        <PlayersTable players={players} currentUser={currentUser} removePlayerFromWatchlist={removePlayerFromWatchlist} />
+                                        <PlayersTable players={players} currentUser={currentUser} handleWatchlistChanges={handleWatchlistChanges} userWatchlist={userWatchlist} />
                                         
                                 </Route>
                                 <Route exact path='/signup'>
@@ -217,7 +167,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                 </Route>
                                 <Route exact path="/watchlist">
                                         
-                                        {userWatchlist ? <Watchlist currentUser={currentUser} userWatchlist={userWatchlist} removePlayerFromWatchlist={removePlayerFromWatchlist} players={players} /> : <div>Loading</div> }
+                                        {userWatchlist ? <Watchlist currentUser={currentUser} userWatchlist={userWatchlist} handleWatchlistChanges={handleWatchlistChanges} players={players} /> : <div>Loading</div> }
                                         
                                 </Route>
                         </Switch>

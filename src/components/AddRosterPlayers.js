@@ -8,13 +8,18 @@ import { useState, useEffect } from "react";
 
 const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
 
-  const [errors, setErrors] = useState([])
+  
   const [currentRoster, setCurrentRoster] = useState(null)
+  // const [playerIds, setPlayerIds] = useState([])
 
   const {id} = useParams()
   const history = useHistory()
 
   useEffect(() => {
+    fetchRosterData()
+  }, [id, currentUser])
+
+  const fetchRosterData = () => {
     const token = localStorage.getItem("token")
     if (token) {
       fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
@@ -25,13 +30,17 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
         .then(resp => resp.json())
         .then((roster) => {
           setCurrentRoster(roster)
+          // const ids = roster.players.map((player) => {
+          //   return player.api_id
+          // })
+          // setPlayerIds(ids)
         })
     }
-  }, [id, currentUser])
+  }
 
 
 
-  const addPlayerToRoster = (playerId) => {
+  const addPlayerToRoster = (rowData) => {
     const token = localStorage.getItem("token")
     if (token) {
       fetch(`http://localhost:3000/roster_players`, {
@@ -42,26 +51,23 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
         },
         body: JSON.stringify({
           roster_id: id,
-          player_id: playerId
+          player_id: rowData.id
         })})
         .then(resp => resp.json())
         .then((data) => {
-          if (data.errors) {
-            setErrors(data.errors)
-          } else {
-            console.log(data)
+            fetchRosterData()
           }
-        })
+        )
     }
   }
 
-  const removePlayerFromRoster = (rowId) => {
+  const removePlayerFromRoster = (rowData) => {
     const token = localStorage.getItem("token")
     if (token) {
       let playerToDelete = currentRoster.roster_players.filter((rp) => {
-        return rp.player_id === rowId && rp.roster_id === currentRoster.id
+        return rp.player_id === rowData.id && rp.roster_id === currentRoster.id
       })
-
+      console.log(playerToDelete)
       const [player] = playerToDelete
 
       fetch(`http://localhost:3000/roster_players/${player.id}`, {
@@ -70,7 +76,9 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
           Authorization: `Bearer ${token}`
         }
       })
-        .then(console.log("deleted"))
+        .then(() => {
+          fetchRosterData()
+        })
     }
   }
 
@@ -196,9 +204,9 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
       field: "",
       render: (rowData) => {
         if (isPlayerOnRoster(rowData.id)) {
-          return <Button onClick={() => removePlayerFromRoster(rowData.id)}>Add</Button>
+          return <Button onClick={() => removePlayerFromRoster(rowData)}>Remove</Button>
         } else {
-          return <Button onClick={() => addPlayerToRoster(rowData.id)}>Add</Button>
+          return <Button onClick={() => addPlayerToRoster(rowData)}>Add</Button>
         }
       }
     }
@@ -206,20 +214,17 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
 
   const isPlayerOnRoster = (id) => {
       
-      const array = currentRoster.roster_players.filter((player) => {
-        return player.player_id === id
-      })
-      if (array.length === 1) {
-        return true
-      } else {
-        return false
-      }
+      // const foundPlayer = currentRoster.roster_players.filter((player) => {
+      //   return player.player_id === id
+      // })
+      // if (foundPlayer.length === 1) {
+      //   return true
+      // } else {
+      //   return false
+      // }
+      return currentRoster.roster_players.find((player) => player.player_id === id)
     
   }
-        
-        
-      
-
 
     return (
         <Grid container justify="center" alignItems="center" direction="column">

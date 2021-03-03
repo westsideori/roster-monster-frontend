@@ -4,11 +4,9 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 
-const Watchlist = ({players, userWatchlist, removePlayerFromWatchlist, currentUser}) => {
+const Watchlist = ({players, userWatchlist, currentUser, handleWatchlistChanges}) => {
 
-  const history = useHistory()
 
   const playerIds = userWatchlist.players.map((player) => {
     return player.api_id
@@ -139,10 +137,29 @@ const Watchlist = ({players, userWatchlist, removePlayerFromWatchlist, currentUs
       field: "",
       sorting: false,
       render: rowData => {
-          return <Button onClick={() => removePlayerFromWatchlist(rowData.id)} variant="contained" >Remove</Button>
+          return <Button onClick={() => removePlayerFromWatchlist(rowData.id)} variant="contained" color="primary">Remove</Button>
       }
     }
   ];
+
+  const removePlayerFromWatchlist = (rowId) => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      let playerToDelete = userWatchlist.watchlist_players.filter((wp) => {
+        return wp.player_id === rowId && wp.watchlist_id === userWatchlist.id
+      })
+
+      const [player] = playerToDelete
+      
+      fetch(`http://localhost:3000/watchlist_players/${player.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(() => handleWatchlistChanges())
+    }
+  }
 
   if (!currentUser) {
     return (

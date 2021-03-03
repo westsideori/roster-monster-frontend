@@ -4,8 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
 
-const PlayersTable = ({players, currentUser, removePlayerFromWatchlist}) => {
-  console.log(currentUser)
+const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChanges}) => {
 
     const columns = [
         {
@@ -125,7 +124,7 @@ const PlayersTable = ({players, currentUser, removePlayerFromWatchlist}) => {
         }
     ];
 
-    const handleAddToWatchlist = (playerId) => {
+    const addPlayerToWatchlist = (rowId) => {
       const token = localStorage.getItem("token")
       if (token) {
         fetch(`http://localhost:3000/watchlist_players/`, {
@@ -135,36 +134,47 @@ const PlayersTable = ({players, currentUser, removePlayerFromWatchlist}) => {
             Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({
-            watchlist_id: currentUser.watchlist.id,
-            player_id: playerId
+            watchlist_id: userWatchlist.id,
+            player_id: rowId
           })
         })
           .then(resp => resp.json())
           .then((data) => {
-            console.log(data)
+            handleWatchlistChanges()
           })
       }
-      
+    }
 
+    const removePlayerFromWatchlist = (rowId) => {
+      const token = localStorage.getItem("token")
+      if (token) {
+        let playerToDelete = userWatchlist.watchlist_players.filter((wp) => {
+          return wp.player_id === rowId && wp.watchlist_id === userWatchlist.id
+        })
+
+        const [player] = playerToDelete
+        
+        fetch(`http://localhost:3000/watchlist_players/${player.id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+          .then(() => handleWatchlistChanges())
+      }
     }
 
     const isPlayerInWatchlist = (id) => {
       
-      if (currentUser && currentUser.watchlist.watchlist_players) {
-        
-        const array = currentUser.watchlist.watchlist_players.filter((player) => {
+        const foundPlayer = userWatchlist.watchlist_players.filter((player) => {
           return player.player_id === id
         })
         
-        if (array.length === 1) {
+        if (foundPlayer.length === 1) {
           return true
         } else {
           return false
         }
-      
-      } else {
-        return false
-      }
     }
 
     let watchlistColumn = {
@@ -174,9 +184,9 @@ const PlayersTable = ({players, currentUser, removePlayerFromWatchlist}) => {
       render: rowData => {
         
         if (isPlayerInWatchlist(rowData.id)) {
-          return <Button onClick={() => removePlayerFromWatchlist(rowData.id)} variant="contained" >Remove</Button>
+          return <Button onClick={() => removePlayerFromWatchlist(rowData.id)} variant="contained" color="primary">Remove</Button>
         } else {
-          return <Button onClick={() => handleAddToWatchlist(rowData.id)} variant="contained" >Add</Button>
+          return <Button onClick={() => addPlayerToWatchlist(rowData.id)} variant="contained" color="primary">Add</Button>
         }
       }
     }
@@ -195,19 +205,6 @@ const PlayersTable = ({players, currentUser, removePlayerFromWatchlist}) => {
           <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
 
         </Grid>
-        {/* {currentUser ? (
-          <Grid item xs={12} >
-      
-            <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
-      
-          </Grid>
-        ) : (
-          <Grid item xs={12} >
-      
-            <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
-      
-          </Grid>
-        )} */}
       </Grid>
     )
 }
