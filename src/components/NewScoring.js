@@ -27,7 +27,7 @@ const NewScoring = ({setIsNewRoster}) => {
         free_throws_attempted: 0
     })
 
-    const [errors, setErrors] = useState([])
+    
 
     const history = useHistory()
 

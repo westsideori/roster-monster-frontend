@@ -1,4 +1,4 @@
-import { NavLink, useHistory } from 'react-router-dom'
+import { NavLink, Link, useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import ToolBar from '@material-ui/core/ToolBar'
 import Typography from '@material-ui/core/Typography'
@@ -53,27 +53,27 @@ const NavBar = ({currentUser, setCurrentUser}) => {
                     </NavLink>
                     {currentUser ? (
                         <>
-                            <NavLink className={classes.rightToolbar} to="/rosters">
+                            <NavLink className={classes.rightToolbar} style={{marginRight: "5px"}} to="/rosters">
                                 <MenuItem color="secondary">
                                     <Typography variant="h6">
                                         {currentUser.username}'s Rosters
                                     </Typography>
                                 </MenuItem>
                             </NavLink>
-                            <NavLink className={classes.rightToolbar} to="/watchlist">
+                            <NavLink  to="/watchlist">
                                 <MenuItem color="secondary">
                                     <Typography variant="h6">
                                         Watchlist
                                     </Typography>
                                 </MenuItem>
                             </NavLink>
-                            <NavLink className={classes.rightToolbar} to="/">
+                            <Link  to="/">
                                 <MenuItem onClick={logout} color="secondary">
                                     <Typography variant="h6">
                                         Logout
                                     </Typography>
                                 </MenuItem>
-                            </NavLink>
+                            </Link>
                         </>
                         ):( 
                         <>

@@ -162,7 +162,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                 </Route>
                                 <Route exact path="/players/:id/">
                                         
-                                        <PlayerDisplay />
+                                        <PlayerDisplay players={players} userWatchlist={userWatchlist} handleWatchlistChanges={handleWatchlistChanges} currentUser={currentUser}/>
                                         
                                 </Route>
                                 <Route exact path="/watchlist">
