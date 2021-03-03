@@ -101,7 +101,7 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
     {
       title: "Name",
       field: "name",
-      render: rowData => <Link to="/">{`${rowData.name}`}</Link>
+      render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.name}`}</Link>
     },
     {
       title: "Team",
