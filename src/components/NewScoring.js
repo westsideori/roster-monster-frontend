@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-const NewScoring = () => {
+const NewScoring = ({setIsNewRoster}) => {
 
     const {id} = useParams()
 
@@ -40,17 +40,22 @@ const NewScoring = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch("http://localhost:3000/score_settings", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        })
-          .then((r) => r.json())
-          .then((data) => {
-            history.push(`/rosters/${id}`)
-          })
+        const token = localStorage.getItem("token")
+        if (token) {
+            fetch("http://localhost:3000/score_settings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(formData),
+            })
+            .then((r) => r.json())
+            .then((data) => {
+                setIsNewRoster(false)
+                history.push(`/rosters/${id}`)
+            })
+          }
     }
 
     const inputProps = {

@@ -4,18 +4,19 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import { Link } from 'react-router-dom'
 
-const RostersList = ({currentUser, userRosters, setUserRosters}) => {
+const RostersList = ({currentUser, userRosters, handleDeleteRoster, setIsNewRoster}) => {
 
+    
 
     const rosters = userRosters.map((roster) => {
         return (
             <Grid item xs={4} key={roster.id}>
-                <RosterCard id={roster.id} roster={roster} currentUser={currentUser} deleteRoster={deleteRoster}/>
+                <RosterCard id={roster.id} roster={roster} currentUser={currentUser} handleDeleteRoster={handleDeleteRoster}/>
             </Grid>
         )
     })
 
-    const 
+    
 
 
     return (
@@ -31,7 +32,7 @@ const RostersList = ({currentUser, userRosters, setUserRosters}) => {
                 <Grid container item xs={4} justify="flex-end">
                     <Grid item>
                         <Link to={`/rosters/new`}>
-                            <Button variant="contained" color="primary">
+                            <Button onClick={() => setIsNewRoster(true)} variant="contained" color="primary">
                                 Create New Roster
                             </Button>
                         </Link>

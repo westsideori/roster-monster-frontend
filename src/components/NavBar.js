@@ -60,6 +60,13 @@ const NavBar = ({currentUser, setCurrentUser}) => {
                                     </Typography>
                                 </MenuItem>
                             </NavLink>
+                            <NavLink className={classes.rightToolbar} to="/watchlist">
+                                <MenuItem color="secondary">
+                                    <Typography variant="h6">
+                                        Watchlist
+                                    </Typography>
+                                </MenuItem>
+                            </NavLink>
                             <NavLink className={classes.rightToolbar} to="/">
                                 <MenuItem onClick={logout} color="secondary">
                                     <Typography variant="h6">

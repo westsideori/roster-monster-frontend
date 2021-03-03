@@ -30,22 +30,26 @@ const NewRoster = ({currentUser, handleNewRoster}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch("http://localhost:3000/rosters", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        })
-          .then((r) => r.json())
-          .then((data) => {
-            if (data.errors) {
-                setErrors(data.errors)
-            } else {
-                handleNewRoster(data)
-                history.push(`/rosters/${data.id}/players/add`)
-            }
-          })
+        const token = localStorage.getItem("token")
+        if (token) {
+            fetch("http://localhost:3000/rosters", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(formData),
+            })
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.errors) {
+                    setErrors(data.errors)
+                } else {
+                    handleNewRoster(data)
+                    history.push(`/rosters/${data.id}/players/add`)
+                }
+            })
+        }
     }
 
     return (
@@ -93,7 +97,7 @@ const NewRoster = ({currentUser, handleNewRoster}) => {
                         <Grid container xs={4} item>
                             {errors.map((error) => {
                                 return (
-                                    <Grid item>
+                                    <Grid key={error} item>
                                         <Typography variant="h6">
                                             {error}
                                         </Typography>

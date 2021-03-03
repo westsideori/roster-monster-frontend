@@ -1,9 +1,11 @@
 import MaterialTable from "material-table";
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 
 
-const PlayersTable = ({players}) => {
+const PlayersTable = ({players, currentUser, removePlayerFromWatchlist}) => {
+  console.log(currentUser)
 
     const columns = [
         {
@@ -121,16 +123,91 @@ const PlayersTable = ({players}) => {
             
           }
         }
-      ];
+    ];
+
+    const handleAddToWatchlist = (playerId) => {
+      const token = localStorage.getItem("token")
+      if (token) {
+        fetch(`http://localhost:3000/watchlist_players/`, {
+          method: 'POST',
+          headers: {
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            watchlist_id: currentUser.watchlist.id,
+            player_id: playerId
+          })
+        })
+          .then(resp => resp.json())
+          .then((data) => {
+            console.log(data)
+          })
+      }
+      
+
+    }
+
+    const isPlayerInWatchlist = (id) => {
+      
+      if (currentUser && currentUser.watchlist.watchlist_players) {
+        
+        const array = currentUser.watchlist.watchlist_players.filter((player) => {
+          return player.player_id === id
+        })
+        
+        if (array.length === 1) {
+          return true
+        } else {
+          return false
+        }
+      
+      } else {
+        return false
+      }
+    }
+
+    let watchlistColumn = {
+      title: "Watchlist",
+      field: "",
+      sorting: false,
+      render: rowData => {
+        
+        if (isPlayerInWatchlist(rowData.id)) {
+          return <Button onClick={() => removePlayerFromWatchlist(rowData.id)} variant="contained" >Remove</Button>
+        } else {
+          return <Button onClick={() => handleAddToWatchlist(rowData.id)} variant="contained" >Add</Button>
+        }
+      }
+    }
+
+    // const columnsWithUser = [...columns]
+
+    if (currentUser) {
+      columns.push(watchlistColumn)
+    }
 
 
     return (
       <Grid container justify="center" alignItems="center" direction="column">
         <Grid item xs={12} >
-            
-            <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
-        
+      
+          <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+
         </Grid>
+        {/* {currentUser ? (
+          <Grid item xs={12} >
+      
+            <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+      
+          </Grid>
+        ) : (
+          <Grid item xs={12} >
+      
+            <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+      
+          </Grid>
+        )} */}
       </Grid>
     )
 }

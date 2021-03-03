@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 
-const RosterCard = ({roster, currentUser}) => {
+const RosterCard = ({roster, handleDeleteRoster}) => {
 
     const history = useHistory()
     const [anchorEl, setAnchorEl] = useState(null)
@@ -23,14 +23,21 @@ const RosterCard = ({roster, currentUser}) => {
         setAnchorEl(null);
     };
 
-    const handleDelete = (id) => {
-        fetch(`http://localhost:3000/rosters/${id}`, {
-            method: 'DELETE'
-        })
-            .then((data) => {
-                history.push('/rosters')
+    const handleDeleteClick = (id) => {
+        const token = localStorage.getItem("token")
+        if (token) {
+            fetch(`http://localhost:3000/rosters/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}` 
+                }
             })
-            
+                .then((data) => {
+                    handleClose()
+                    handleDeleteRoster(id)
+                    history.push('/rosters')
+                })
+        }
     };
 
     const handleEdit = () => {
@@ -56,7 +63,7 @@ const RosterCard = ({roster, currentUser}) => {
                             <MenuItem onClick={handleEdit}>
                                 Edit Team Details
                             </MenuItem>
-                            <MenuItem onClick={() => handleDelete(roster.id)}>
+                            <MenuItem onClick={() => handleDeleteClick(roster.id)}>
                                 Delete
                             </MenuItem>
                         </Menu>

@@ -3,32 +3,77 @@ import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { useHistory, useParams } from 'react-router-dom'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const AddRosterPlayers = ({players}) => {
 
-  
+const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
+
+  const [errors, setErrors] = useState([])
+  const [currentRoster, setCurrentRoster] = useState(null)
 
   const {id} = useParams()
   const history = useHistory()
 
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(resp => resp.json())
+        .then((roster) => {
+          setCurrentRoster(roster)
+        })
+    }
+  }, [id, currentUser])
+
 
 
   const addPlayerToRoster = (playerId) => {
-    fetch(`http://localhost:3000/roster_players`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        roster_id: id,
-        player_id: playerId
-      })})
-      .then(resp => resp.json())
-      .then((data) => {
-        console.log(data)
-      })
+    const token = localStorage.getItem("token")
+    if (token) {
+      fetch(`http://localhost:3000/roster_players`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          roster_id: id,
+          player_id: playerId
+        })})
+        .then(resp => resp.json())
+        .then((data) => {
+          if (data.errors) {
+            setErrors(data.errors)
+          } else {
+            console.log(data)
+          }
+        })
+    }
   }
+
+  const removePlayerFromRoster = (rowId) => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      let playerToDelete = currentRoster.roster_players.filter((rp) => {
+        return rp.player_id === rowId && rp.roster_id === currentRoster.id
+      })
+
+      const [player] = playerToDelete
+
+      fetch(`http://localhost:3000/roster_players/${player.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(console.log("deleted"))
+    }
+  }
+
 
   const columns = [
     {
@@ -147,11 +192,30 @@ const AddRosterPlayers = ({players}) => {
       }
     },
     {
-      title: "Add to Roster",
+      title: "Add/Remove",
       field: "",
-      render: (rowData) => <Button onClick={() => addPlayerToRoster(rowData.id)}>Add</Button>
+      render: (rowData) => {
+        if (isPlayerOnRoster(rowData.id)) {
+          return <Button onClick={() => removePlayerFromRoster(rowData.id)}>Add</Button>
+        } else {
+          return <Button onClick={() => addPlayerToRoster(rowData.id)}>Add</Button>
+        }
+      }
     }
   ]
+
+  const isPlayerOnRoster = (id) => {
+      
+      const array = currentRoster.roster_players.filter((player) => {
+        return player.player_id === id
+      })
+      if (array.length === 1) {
+        return true
+      } else {
+        return false
+      }
+    
+  }
         
         
       
@@ -159,12 +223,17 @@ const AddRosterPlayers = ({players}) => {
 
     return (
         <Grid container justify="center" alignItems="center" direction="column">
-      
-          <Button variant="contained" onClick={() => history.push(`/rosters/${id}/scoring/new`)}>
-            Save
-          </Button>
-          <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
-      
+          {currentRoster ? (
+            <>
+              <Button variant="contained" onClick={() => isNewRoster ? history.push(`/rosters/${id}/scoring/new`) : history.push(`/rosters/${id}`)}>
+                Save
+              </Button>
+              <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+            </>
+          ) : (
+            <div>Loading</div>
+          )}
+          
         </Grid>
 
     )

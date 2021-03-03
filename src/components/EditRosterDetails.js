@@ -1,35 +1,38 @@
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { useState } from 'react'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 
 
-const EditRosterDetails = ({currentUser, handleNewRoster}) => {
+const EditRosterDetails = ({currentUser, handleUpdateRoster}) => {
 
 
     const {id} = useParams()
 
 
-    const [roster, setRoster] = useState({})
+    
+    const [formData, setFormData] = useState({})
 
     useEffect(() => {
         fetch(`http://localhost:3000/rosters/${id}`)
             .then(resp => resp.json())
             .then((roster) => {
-                setRoster(roster)
+                setFormData({
+                    user_id: currentUser.id,
+                    name: roster.name,
+                    league: roster.league,
+                    season: roster.season,
+                    slogan: roster.slogan
+                })
             })
-    }, [roster])
+    }, [id, currentUser])
 
-    const [formData, setFormData] = useState({
-        user_id: currentUser.id,
-        name: roster.name,
-        league: roster.league,
-        season: roster.season,
-        slogan: roster.slogan
-    })
+    
+    
 
     const [errors, setErrors] = useState([])
 
@@ -44,21 +47,26 @@ const EditRosterDetails = ({currentUser, handleNewRoster}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/rosters/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        })
-          .then((r) => r.json())
-          .then((data) => {
-            if (data.errors) {
-                setErrors(data.errors)
-            } else {
-                history.push(`/rosters/${data.id}`)
-            }
-          })
+        const token = localStorage.getItem("token")
+        if (token) {
+            fetch(`http://localhost:3000/rosters/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(formData),
+            })
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.errors) {
+                    setErrors(data.errors)
+                } else {
+                    handleUpdateRoster(data.id, data)
+                    
+                }
+            })
+        }
     }
 
     return (
@@ -66,39 +74,52 @@ const EditRosterDetails = ({currentUser, handleNewRoster}) => {
             <form onSubmit={handleSubmit}>
                 <Grid container >
                     <Grid container item xs={12} spacing={3} direction="column">
-                        <Typography variant="h4">Create Roster</Typography>
+                        <Typography variant="h4">Edit Roster</Typography>
                         <Grid item xs={12}>
-                            <TextField 
-                                name="name"
-                                label="Roster Name"
+                            <InputLabel>
+                                Roster Name
+                            </InputLabel>
+                            <Input
+                                name="name"                              
                                 variant="outlined"
+                                type="text"
                                 onChange={handleChange}
                                 value={formData.name}
                             />
+                           
                         </Grid>
                         <Grid item>
-                            <TextField 
-                                name="league"
-                                label="League Name"
+                            <InputLabel>
+                                League Name
+                            </InputLabel>
+                            <Input
+                                name="league"                              
                                 variant="outlined"
+                                type="text"
                                 onChange={handleChange}
                                 value={formData.league}
                             />
                         </Grid>
                         <Grid item>
-                            <TextField 
-                                name="season"
-                                label="Season"
+                            <InputLabel>
+                                Season
+                            </InputLabel>
+                            <Input
+                                name="season"                              
                                 variant="outlined"
+                                type="text"
                                 onChange={handleChange}
                                 value={formData.season}
                             />
                         </Grid>
                         <Grid item>
-                            <TextField 
-                                name="slogan"
-                                label="Slogan"
+                            <InputLabel>
+                                Slogan
+                            </InputLabel>
+                            <Input
+                                name="slogan"                              
                                 variant="outlined"
+                                type="text"
                                 onChange={handleChange}
                                 value={formData.slogan}
                             />

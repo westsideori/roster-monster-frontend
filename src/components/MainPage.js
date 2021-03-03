@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import PlayersTable from './PlayersTable'
 import Welcome from './Welcome'
@@ -10,20 +10,21 @@ import EditRosterDetails from './EditRosterDetails'
 import NewRoster from './NewRoster'
 import NewScoring from './NewScoring'
 import AddRosterPlayers from './AddRosterPlayers'
-import AddRosterPlayersToExisting from './AddRosterPlayersToExisting'
 import RosterDisplay from './RosterDisplay'
 import PlayerDisplay from './PlayerDisplay'
-import AddWatchlistPlayers from './AddWatchlistPlayers'
 import Watchlist from './Watchlist'
 import { useState, useEffect } from 'react'
 
 
 const MainPage = ({setCurrentUser, currentUser}) => {
 
+        const history = useHistory()
+
         const [players, setPlayers] = useState([])
         const [userRosters, setUserRosters] = useState([])
-
+        const [userWatchlist, setUserWatchlist] = useState(null)
         const [playerPredictions, setPlayerPredictions] = useState([])
+        const [isNewRoster, setIsNewRoster] = useState(false)
 
         useEffect(() => {
                 fetch(`http://localhost:3000/players`)
@@ -57,6 +58,25 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                 
         }, [currentUser])
 
+        useEffect(() => {
+                console.log(currentUser)
+                if (currentUser) {
+                        const token = localStorage.getItem("token")
+                        if (token) {
+                                fetch(`http://localhost:3000/users/${currentUser.id}/watchlist`, {
+                                        headers: {
+                                                Authorization: `Bearer ${token}`
+                                        },
+                                })
+                                        .then(r => r.json())
+                                        .then((watchlist) => {
+                                                console.log(watchlist)
+                                                setUserWatchlist(watchlist)
+                                        })
+                        } 
+                }      
+        }, [currentUser])
+
         // useEffect(() => {
         //         if (currentUser) {
         //                 fetch(`http://localhost:3000/users/${currentUser.id}/rosters`)
@@ -86,6 +106,55 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                 setUserRosters([...userRosters, roster])
         }
 
+        const handleUpdateRoster = (id, updatedRoster) => {
+                console.log(updatedRoster, id)
+                const updatedRosters = userRosters.map((roster) => {
+                    if (roster.id === id) {
+                        return updatedRoster 
+                    } else {
+                        return roster
+                    }
+                })
+                console.log(updatedRosters)
+                setUserRosters(updatedRosters)
+                history.push(`/rosters/${id}`)
+        }
+
+        const handleDeleteRoster = (id) => {
+                const updatedRosters = userRosters.filter((roster) => {
+                        return roster.id !== id
+                    })
+                    
+                setUserRosters(updatedRosters)
+                
+        }
+
+        const removePlayerFromWatchlist = (rowId) => {
+                const token = localStorage.getItem("token")
+                if (token) {
+                        let playerToDelete = userWatchlist.watchlist_players.filter((wp) => {
+                                return wp.player_id === rowId && wp.watchlist_id === userWatchlist.id
+                        })
+                
+                        const [player] = playerToDelete
+                        
+                        fetch(`http://localhost:3000/watchlist_players/${player.id}`, {
+                                method: 'DELETE',
+                                headers: {
+                                        Authorization: `Bearer ${token}`
+                                }
+                        })
+                                .then(console.log('Removed'))
+                }
+        }
+            
+        // const handleRemove = (apiId) => {
+        //         let filteredIds = playerIds.filter((id) => {
+        //                 return id !== apiId
+        //         })
+        //         setPlayerIds(filteredIds)
+        // }
+
         console.log(playerPredictions)
 
         return (
@@ -99,7 +168,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                 </Route>
                                 <Route exact path='/players'>
                                         
-                                        <PlayersTable players={players}/>
+                                        <PlayersTable players={players} currentUser={currentUser} removePlayerFromWatchlist={removePlayerFromWatchlist} />
                                         
                                 </Route>
                                 <Route exact path='/signup'>
@@ -112,36 +181,33 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         <News/>
                                 </Route>
                                 <Route exact path='/rosters'>
-                                        <RostersList currentUser={currentUser} userRosters={userRosters} setUserRosters={setUserRosters}/>
+
+                                        {currentUser && <RostersList currentUser={currentUser} userRosters={userRosters} setUserRosters={setUserRosters} handleDeleteRoster={handleDeleteRoster} setIsNewRoster={setIsNewRoster} />}
+                                        
                                 </Route>
                                 <Route exact path="/rosters/:id/edit">
                                         
-                                        <EditRosterDetails currentUser={currentUser} />
+                                        {currentUser && <EditRosterDetails currentUser={currentUser} handleUpdateRoster={handleUpdateRoster} />}
                                         
                                 </Route>
                                 <Route exact path="/rosters/new">
                                         
-                                        <NewRoster currentUser={currentUser} handleNewRoster={handleNewRoster}/>
+                                        {currentUser && <NewRoster currentUser={currentUser} handleNewRoster={handleNewRoster}/>}
                                         
                                 </Route>
                                 <Route exact path="/rosters/:id/scoring/new">
                                         
-                                        <NewScoring currentUser={currentUser}/>
+                                        {currentUser && <NewScoring currentUser={currentUser} setIsNewRoster={setIsNewRoster}/>}
                                         
                                 </Route>
                                 <Route exact path="/rosters/:id/players/add">
                                         
-                                        <AddRosterPlayers currentUser={currentUser} players={players}/>
-                                        
-                                </Route>
-                                <Route exact path="/rosters/:id/players/add_new">
-                                        
-                                        <AddRosterPlayersToExisting currentUser={currentUser} players={players}/>
+                                        {currentUser && <AddRosterPlayers currentUser={currentUser} players={players} isNewRoster={isNewRoster} />}
                                         
                                 </Route>
                                 <Route exact path="/rosters/:id">
                                         
-                                        <RosterDisplay currentUser={currentUser} playerPredictions={playerPredictions}/>
+                                        {currentUser && <RosterDisplay currentUser={currentUser} playerPredictions={playerPredictions} />}
                                         
                                 </Route>
                                 <Route exact path="/players/:id/">
@@ -149,14 +215,9 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         <PlayerDisplay />
                                         
                                 </Route>
-                                <Route exact path="/watchlist/add">
-                                        
-                                        <AddWatchlistPlayers />
-                                        
-                                </Route>
                                 <Route exact path="/watchlist">
                                         
-                                        <Watchlist currentUser={currentUser} players={players}/>
+                                        {userWatchlist ? <Watchlist currentUser={currentUser} userWatchlist={userWatchlist} removePlayerFromWatchlist={removePlayerFromWatchlist} players={players} /> : <div>Loading</div> }
                                         
                                 </Route>
                         </Switch>

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
-const RosterDisplay = ({playerPredictions}) => {
+const RosterDisplay = ({playerPredictions, currentUser}) => {
   
   
   const {id} = useParams()
@@ -16,28 +16,43 @@ const RosterDisplay = ({playerPredictions}) => {
   const [playerIds, setPlayerIds] = useState([])
 
   useEffect(() => {
-    fetch(`http://localhost:3000/rosters/${id}`)
-      .then(r => r.json())
-      .then((roster) => {
-        setSelectedRoster(roster)
-        let idCollection = roster.players.map((player) => {
-          return player.api_id
+    
+      const token = localStorage.getItem("token")
+      if (token) {
+        fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
-        setPlayerIds(idCollection)
-      })
-  }, [id])
+          .then(r => r.json())
+          .then((roster) => {
+            console.log(roster)
+            setSelectedRoster(roster)
+            let idCollection = roster.players.map((player) => {
+              return player.api_id
+            })
+            setPlayerIds(idCollection)
+          })
+      }
+  }, [id, currentUser])
 
   const removePlayer = (rowId, apiId) => {
-    let playerToDelete = selectedRoster.roster_players.filter((rp) => {
-      return rp.player_id === rowId && rp.roster_id === selectedRoster.id
-    })
+    const token = localStorage.getItem("token")
+    if (token) {
+      let playerToDelete = selectedRoster.roster_players.filter((rp) => {
+        return rp.player_id === rowId && rp.roster_id === selectedRoster.id
+      })
 
-    const [player] = playerToDelete
+      const [player] = playerToDelete
 
-    fetch(`http://localhost:3000/roster_players/${player.id}`, {
-      method: 'DELETE'
-    })
-      .then(handleRemove(apiId))
+      fetch(`http://localhost:3000/roster_players/${player.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(handleRemove(apiId))
+    }
   }
 
   const handleRemove = (apiId) => {
@@ -48,7 +63,7 @@ const RosterDisplay = ({playerPredictions}) => {
   }
 
   const handleAdd = (e) => {
-    history.push(`/rosters/${id}/players/add_new`)
+    history.push(`/rosters/${id}/players/add`)
   }
 
 
