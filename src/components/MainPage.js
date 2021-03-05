@@ -11,6 +11,7 @@ import NewRoster from './NewRoster'
 import NewScoring from './NewScoring'
 import AddRosterPlayers from './AddRosterPlayers'
 import RosterDisplay from './RosterDisplay'
+import LineupOptimizer from './LineupOptimizer'
 import PlayerDisplay from './PlayerDisplay'
 import Watchlist from './Watchlist'
 import { useState, useEffect } from 'react'
@@ -169,6 +170,9 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         
                                         {userWatchlist ? <Watchlist currentUser={currentUser} userWatchlist={userWatchlist} handleWatchlistChanges={handleWatchlistChanges} players={players} /> : <div>Loading</div> }
                                         
+                                </Route>
+                                <Route exact path="/rosters/:id/optimize">
+                                        <LineupOptimizer playerPredictions={playerPredictions} currentUser={currentUser} />
                                 </Route>
                         </Switch>
                 </Grid>

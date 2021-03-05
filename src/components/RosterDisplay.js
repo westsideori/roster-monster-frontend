@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
+
 const RosterDisplay = ({playerPredictions, currentUser}) => {
   
   
@@ -228,6 +229,13 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
         
         <Grid container justify="center" alignItems="center" direction="column">
             <Grid container item xs={10} justify="flex-end" direction="row">
+                    <Grid item>
+                      <Link to={`/rosters/${id}/optimize`}>
+                        <Button variant="contained" color="primary">
+                            Optimize Lineup
+                        </Button>
+                      </Link>
+                    </Grid>
                     <Grid item>
                         <Button onClick={handleAdd} variant="contained" color="primary">
                             Add Players
