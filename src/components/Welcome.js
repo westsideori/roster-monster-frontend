@@ -12,6 +12,7 @@ const Welcome = () => {
                 <Typography variant="h4" color="primary">
                     The must have tool for your fantasy basketball squads.
                 </Typography>
+                <img src={`https://media.giphy.com/media/S8xSr7zFcqECH53Mr2/giphy.gif`} alt={`RosterMonster`} />
             
         </Grid>
     )

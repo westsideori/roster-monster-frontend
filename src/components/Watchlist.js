@@ -2,7 +2,6 @@ import MaterialTable from "material-table"
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
 
 
 const Watchlist = ({players, userWatchlist, currentUser, handleWatchlistChanges}) => {
@@ -17,6 +16,12 @@ const Watchlist = ({players, userWatchlist, currentUser, handleWatchlistChanges}
   })
 
   const columns = [
+    {
+      title: "",
+      field: "",
+      sorting: false,
+      render: rowData => <img src={rowData.image} alt={rowData.name} style={{height: "50px", widht: "50px"}} />
+    },
     {
       title: "Name",
       field: "name",
@@ -163,9 +168,12 @@ const Watchlist = ({players, userWatchlist, currentUser, handleWatchlistChanges}
 
   if (!currentUser) {
     return (
-      <div>
-        Loading...
-      </div>
+      <Grid container xs={12} justify="center">
+        <Grid item>
+          Loading...
+          <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
+        </Grid>
+      </Grid>
     )
   }
 
@@ -174,7 +182,7 @@ const Watchlist = ({players, userWatchlist, currentUser, handleWatchlistChanges}
       <Grid container justify="center" alignItems="center" direction="column">
         <Grid item xs={12} >
             
-            <MaterialTable title="Players" data={filteredPlayers} columns={columns} options={{ sorting: true }} />
+            <MaterialTable title={`${currentUser.username}'s Watchlist`} data={filteredPlayers} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
         
         </Grid>
       </Grid>

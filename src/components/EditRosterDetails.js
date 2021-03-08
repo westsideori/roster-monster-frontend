@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import { useState, useEffect } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 
 
@@ -18,25 +18,30 @@ const EditRosterDetails = ({currentUser, handleUpdateRoster}) => {
     const [formData, setFormData] = useState({})
 
     useEffect(() => {
-        fetch(`http://localhost:3000/rosters/${id}`)
-            .then(resp => resp.json())
-            .then((roster) => {
-                setFormData({
-                    user_id: currentUser.id,
-                    name: roster.name,
-                    league: roster.league,
-                    season: roster.season,
-                    slogan: roster.slogan
-                })
+        const token = localStorage.getItem("token")
+        if (token) {
+            fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
+                .then(resp => resp.json())
+                .then((roster) => {
+                    setFormData({
+                        user_id: currentUser.id,
+                        name: roster.name,
+                        league: roster.league,
+                        season: roster.season,
+                        slogan: roster.slogan
+                    })
+                })
+        }
     }, [id, currentUser])
 
     
     
 
     const [errors, setErrors] = useState([])
-
-    const history = useHistory()
 
     const handleChange = (e) => {
         setFormData({

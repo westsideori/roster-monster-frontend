@@ -168,7 +168,16 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                 </Route>
                                 <Route exact path="/watchlist">
                                         
-                                        {userWatchlist ? <Watchlist currentUser={currentUser} userWatchlist={userWatchlist} handleWatchlistChanges={handleWatchlistChanges} players={players} /> : <div>Loading</div> }
+                                        {userWatchlist ? (
+                                                <Watchlist currentUser={currentUser} userWatchlist={userWatchlist} handleWatchlistChanges={handleWatchlistChanges} players={players} />
+                                                ) : (
+                                                <Grid container xs={12} justify="center">
+                                                        <Grid item>
+                                                                Loading...
+                                                                <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
+                                                        </Grid>
+                                                </Grid> 
+                                        )}
                                         
                                 </Route>
                                 <Route exact path="/rosters/:id/optimize">

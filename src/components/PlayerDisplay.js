@@ -34,7 +34,7 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
     {
       title: "Name",
       field: "name",
-      // render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.name}`}</Link>
+      render: rowData => <a href={`https://sports.yahoo.com/nba/players/${rowData.yahoo_id}/news/`} target="_blank" rel="noreferrer">{`${rowData.name}`}</a>
     },
     {
       title: "Team",
@@ -227,7 +227,12 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
       <Grid container justify="flex-start"  alignItems="center" spacing={3} >
           
             {!displayedPlayer ? (
-              <div>Loading</div>
+              <Grid container xs={12} justify="center">
+                <Grid item>
+                  Loading...
+                  <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
+                </Grid>
+              </Grid>
               ) : (
                 <>
                 <Grid container item xs={6} justify="flex-end" >

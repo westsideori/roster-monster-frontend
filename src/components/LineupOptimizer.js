@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import { Grid } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography'
 import { useEffect, useState } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 
@@ -12,7 +12,6 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
   
   
   const {id} = useParams()
-  const history = useHistory()
 
   const [selectedRoster, setSelectedRoster] = useState([])
   const [playerIds, setPlayerIds] = useState([])
@@ -84,9 +83,12 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
 
   if (!selectedRoster || !selectedRoster.score_setting) {
     return (
-      <div>
-        Loading...
-      </div>
+      <Grid container xs={12} justify="center">
+        <Grid item>
+          Loading...
+          <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
+        </Grid>
+      </Grid>
     )
   }
 
@@ -111,6 +113,12 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
   // const settings = []
 
   const columns = [
+    {
+      title: "",
+      field: "",
+      sorting: false,
+      render: rowData => <img src={rowData.image} alt={rowData.name} style={{height: "50px", widht: "50px"}} />
+    },
     {
       title: "Name",
       field: "name",
@@ -365,7 +373,7 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
         {formShowing ? (
           <>
           <form onSubmit={handleLineupFormSubmit}>
-            <Grid container item xs={10} justify="flex-end" direction="row">
+            <Grid container item xs={10} justify="flex-end" direction="column">
               <Typography variant="h4">Set Lineup Layout</Typography>
                 <Grid item xs={12}>
                     <InputLabel>
@@ -474,19 +482,28 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
           )}
         {lineupShowing ? (
           <>
-          <Grid item xs={8} >
-            <Typography variant="h4">
-                {selectedRoster.name}
-            </Typography>
-            <Typography variant="h4">
-                {selectedRoster.league}
-            </Typography>
-            <Typography variant="h4">
-                {selectedRoster.season}
-            </Typography>
-            <Typography variant="h4">
-                {selectedRoster.slogan}
-            </Typography>
+          <Grid container item xs={10} justify="flex-start" direction="row">
+            <Grid item>
+              <Typography variant="h6" color="primary">
+                Players with no games tonight won't show up in prediction table.
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container item xs={8} justify="center">
+            <Grid item>
+              <Typography variant="h5">
+                  {selectedRoster.name}
+              </Typography>
+              <Typography variant="h6">
+                  {selectedRoster.league}
+              </Typography>
+              <Typography variant="h6">
+                  {selectedRoster.season}
+              </Typography>
+              <Typography variant="h6">
+                  {selectedRoster.slogan}
+              </Typography>
+            </Grid>
           </Grid>
           <Grid item>
             <Link to={`/rosters/${selectedRoster.id}/`}>
@@ -496,7 +513,7 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
             </Link>
           </Grid>
           <Grid item xs={12} >
-            <MaterialTable title={selectedRoster.name} data={optimizedLineup} columns={columns} options={{ sorting: true }} />
+            <MaterialTable title={`${selectedRoster.name}'s Projections for ${new Date().toLocaleDateString()}`} data={optimizedLineup} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
           </Grid>
           </>
         ) : (

@@ -78,7 +78,7 @@ const RosterCard = ({roster, handleDeleteRoster}) => {
                             {roster.league}
                         </Typography>
                         <Typography variant="body2" component="p">
-                            {roster.slogan}
+                            "{roster.slogan}"
                         </Typography>
                     </Link>
                     </CardContent>

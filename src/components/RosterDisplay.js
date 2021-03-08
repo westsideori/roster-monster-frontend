@@ -70,9 +70,12 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
 
   if (!selectedRoster || !selectedRoster.score_setting) {
     return (
-      <div>
-        Loading...
-      </div>
+      <Grid container xs={12} justify="center">
+        <Grid item>
+          Loading...
+          <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
+        </Grid>
+      </Grid>
     )
   }
 
@@ -99,6 +102,12 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
   // const settings = []
 
   const columns = [
+    {
+      title: "",
+      field: "",
+      sorting: false,
+      render: rowData => <img src={rowData.image} alt={rowData.name} style={{height: "50px", widht: "50px"}} />
+    },
     {
       title: "Name",
       field: "name",
@@ -228,6 +237,13 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
     return (
         
         <Grid container justify="center" alignItems="center" direction="column">
+            <Grid container item xs={10} justify="flex-start" direction="row">
+              <Grid item>
+                <Typography variant="h6" color="primary">
+                  Players with no games tonight won't show up in prediction table.
+                </Typography>
+              </Grid>
+            </Grid>
             <Grid container item xs={10} justify="flex-end" direction="row">
                     <Grid item>
                       <Link to={`/rosters/${id}/optimize`}>
@@ -240,18 +256,26 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
                         <Button onClick={handleAdd} variant="contained" color="primary">
                             Add Players
                         </Button>
-                    </Grid>
+                    </Grid>     
             </Grid>
-            <Grid item xs={8} >
-                <Typography variant="h4">
+            <Grid container item xs={8} justify="center">
+                <Grid item>
+                <Typography variant="h5">
                     {selectedRoster.name}
+                </Typography>
+                <Typography variant="h6">
                     {selectedRoster.league}
+                </Typography>
+                <Typography variant="h6">
                     {selectedRoster.season}
+                </Typography>
+                <Typography variant="h6">
                     {selectedRoster.slogan}
                 </Typography>
+              </Grid>
             </Grid>
             <Grid item xs={12} >
-                <MaterialTable title={selectedRoster.name} data={filteredPlayerPredictions} columns={columns} options={{ sorting: true }} />
+                <MaterialTable title={`${selectedRoster.name}'s Projections for ${new Date().toLocaleDateString()}`} data={filteredPlayerPredictions} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
             </Grid>
         </Grid>
         

@@ -25,7 +25,7 @@ const RostersList = ({currentUser, userRosters, handleDeleteRoster, setIsNewRost
                 <Grid container item xs={8} justify="flex-start" >
                     <Grid item  >
                         <Typography variant="h4" color="primary">
-                            User's Rosters
+                            {currentUser.username}'s Rosters
                         </Typography>
                     </Grid>
                 </Grid>

@@ -8,6 +8,12 @@ const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChang
 
     const columns = [
         {
+          title: "",
+          field: "",
+          sorting: false,
+          render: rowData => <img src={rowData.image} alt={rowData.name} style={{height: "50px", widht: "50px"}} />
+        },
+        {
           title: "Name",
           field: "name",
           render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.name}`}</Link>
@@ -202,7 +208,7 @@ const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChang
       <Grid container justify="center" alignItems="center" direction="column">
         <Grid item xs={12} >
       
-          <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+          <MaterialTable title={`Player Stats as of ${new Date().toLocaleDateString()}`} data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
 
         </Grid>
       </Grid>

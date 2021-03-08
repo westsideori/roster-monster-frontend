@@ -85,6 +85,12 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
 
   const columns = [
     {
+      title: "",
+      field: "",
+      sorting: false,
+      render: rowData => <img src={rowData.image} alt={rowData.name} style={{height: "50px", widht: "50px"}} />
+    },
+    {
       title: "Name",
       field: "name",
       render: rowData => <Link to={`/players/${rowData.id}`}>{`${rowData.name}`}</Link>
@@ -233,10 +239,15 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
               <Button variant="contained" onClick={() => isNewRoster ? history.push(`/rosters/${id}/scoring/new`) : history.push(`/rosters/${id}`)}>
                 Save
               </Button>
-              <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true }} />
+              <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
             </>
           ) : (
-            <div>Loading</div>
+            <Grid container xs={12} justify="center">
+              <Grid item>
+                Loading...
+                <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball"/>
+              </Grid>
+            </Grid>
           )}
           
         </Grid>
