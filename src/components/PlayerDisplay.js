@@ -152,7 +152,7 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
   const addPlayerToWatchlist = (rowId) => {
     const token = localStorage.getItem("token")
     if (token) {
-      fetch(`http://localhost:3000/watchlist_players/`, {
+      fetch(`${process.env.REACT_APP_RAILS_URL}/watchlist_players/`, {
         method: 'POST',
         headers: {
           "Content-Type": 'application/json',
@@ -179,7 +179,7 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
 
       const [player] = playerToDelete
       
-      fetch(`http://localhost:3000/watchlist_players/${player.id}`, {
+      fetch(`${process.env.REACT_APP_RAILS_URL}/watchlist_players/${player.id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`

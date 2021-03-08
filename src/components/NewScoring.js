@@ -42,7 +42,7 @@ const NewScoring = ({setIsNewRoster}) => {
         e.preventDefault();
         const token = localStorage.getItem("token")
         if (token) {
-            fetch("http://localhost:3000/score_settings", {
+            fetch(`${process.env.REACT_APP_RAILS_URL}/score_settings`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

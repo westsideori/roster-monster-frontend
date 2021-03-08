@@ -27,7 +27,7 @@ const Signup = ({setCurrentUser}) => {
     const handleSignup = (e) => {
         e.preventDefault();
         // POST /signup
-        fetch("http://localhost:3000/signup", {
+        fetch(`${process.env.REACT_APP_RAILS_URL}signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -38,6 +38,7 @@ const Signup = ({setCurrentUser}) => {
           .then((data) => {
             if (data.errors) {
               // set errors to show errors in the form
+              console.log(data.errors)
               setErrors(data.errors);
             } else {
               // use the response to set state
@@ -60,10 +61,12 @@ const Signup = ({setCurrentUser}) => {
                 
                     <Grid container item xs={4}/>
                         
-                    <Grid container item xs={4} spacing={3}>
-                    <Typography>Signup</Typography>
+                    <Grid container item xs={3} spacing={3}>
                         <Grid item>
-                            <TextField 
+                            <Typography variant="h6" color="primary">Signup</Typography>
+                        </Grid>
+                        <Grid item>
+                            <TextField
                                 name="name"
                                 label="Name"
                                 variant="outlined"
@@ -90,11 +93,11 @@ const Signup = ({setCurrentUser}) => {
                                 value={formData.password}
                             />
                         </Grid>
-                        <Grid container xs={4} item>
-                            {errors.map((error) => {
+                        <Grid container xs={12} item direction="column">
+                            {errors.map((error, index) => {
                                 return (
-                                    <Grid item>
-                                        <Typography variant="h6">
+                                    <Grid item key={index}>
+                                        <Typography variant="h6" color="error">
                                             {error}
                                         </Typography>
                                     </Grid>

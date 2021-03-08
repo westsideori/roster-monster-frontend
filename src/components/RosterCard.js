@@ -26,7 +26,7 @@ const RosterCard = ({roster, handleDeleteRoster}) => {
     const handleDeleteClick = (id) => {
         const token = localStorage.getItem("token")
         if (token) {
-            fetch(`http://localhost:3000/rosters/${id}`, {
+            fetch(`${process.env.REACT_APP_RAILS_URL}/rosters/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}` 

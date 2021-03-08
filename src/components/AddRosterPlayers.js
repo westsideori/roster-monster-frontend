@@ -22,7 +22,7 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
   const fetchRosterData = () => {
     const token = localStorage.getItem("token")
     if (token) {
-      fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
+      fetch(`${process.env.REACT_APP_RAILS_URL}/users/${currentUser.id}/rosters/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
   const addPlayerToRoster = (rowData) => {
     const token = localStorage.getItem("token")
     if (token) {
-      fetch(`http://localhost:3000/roster_players`, {
+      fetch(`${process.env.REACT_APP_RAILS_URL}/roster_players`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
       console.log(playerToDelete)
       const [player] = playerToDelete
 
-      fetch(`http://localhost:3000/roster_players/${player.id}`, {
+      fetch(`${process.env.REACT_APP_RAILS_URL}/roster_players/${player.id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`
@@ -210,9 +210,9 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
       field: "",
       render: (rowData) => {
         if (isPlayerOnRoster(rowData.id)) {
-          return <Button onClick={() => removePlayerFromRoster(rowData)}>Remove</Button>
+          return <Button color="primary" variant="contained" onClick={() => removePlayerFromRoster(rowData)}>Remove</Button>
         } else {
-          return <Button onClick={() => addPlayerToRoster(rowData)}>Add</Button>
+          return <Button color="primary" variant="contained" onClick={() => addPlayerToRoster(rowData)}>Add</Button>
         }
       }
     }
@@ -242,7 +242,7 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
               <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
             </>
           ) : (
-            <Grid container xs={12} justify="center">
+            <Grid container item xs={12} justify="center">
               <Grid item>
                 Loading...
                 <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball"/>

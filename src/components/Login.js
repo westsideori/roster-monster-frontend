@@ -22,7 +22,7 @@ const Login = ({setCurrentUser, currentUser}) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        fetch("http://localhost:3000/login", {
+        fetch(`${process.env.REACT_APP_RAILS_URL}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
@@ -52,7 +52,9 @@ const Login = ({setCurrentUser, currentUser}) => {
                     <Grid container item xs={4}/>
                 
                     <Grid container item xs={4} spacing={3}>
-                        <Typography>Login</Typography>
+                        <Grid item>
+                            <Typography variant="h6" color="primary">Login</Typography>
+                        </Grid>
                         <Grid item>
                             <TextField 
                                 name="username"
@@ -72,11 +74,11 @@ const Login = ({setCurrentUser, currentUser}) => {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid container xs={4} item>
-                            {errors.map((error) => {
+                        <Grid container xs={12} item direction="column">
+                            {errors.map((error, index) => {
                                 return (
-                                    <Grid item>
-                                        <Typography variant="h6">
+                                    <Grid item key={index}>
+                                        <Typography variant="h6" color="error">
                                             {error}
                                         </Typography>
                                     </Grid>

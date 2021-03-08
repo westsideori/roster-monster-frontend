@@ -33,7 +33,7 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
     
       const token = localStorage.getItem("token")
       if (token) {
-        fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
+        fetch(`${process.env.REACT_APP_RAILS_URL}/users/${currentUser.id}/rosters/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

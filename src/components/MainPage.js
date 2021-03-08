@@ -28,7 +28,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
         const [isNewRoster, setIsNewRoster] = useState(false)
 
         useEffect(() => {
-                fetch(`http://localhost:3000/players`)
+                fetch(`${process.env.REACT_APP_RAILS_URL}/players`)
                         .then(resp => resp.json())
                         .then(playerData => {
                                 setPlayers(playerData)
@@ -36,7 +36,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                 }, [])
 
         useEffect(() => {
-                fetch(`http://localhost:3000/predictions`)
+                fetch(`${process.env.REACT_APP_RAILS_URL}/predictions`)
                         .then(resp => resp.json())
                         .then((predictionData) => {
                                 setPlayerPredictions(predictionData)
@@ -46,7 +46,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
         useEffect(() => {
                 if (currentUser) {
                         const token = localStorage.getItem("token")
-                        fetch(`http://localhost:3000/users/${currentUser.id}/rosters`, {
+                        fetch(`${process.env.REACT_APP_RAILS_URL}/users/${currentUser.id}/rosters`, {
                                 headers: {
                                 Authorization: `Bearer ${token}`,
                                 },
@@ -94,7 +94,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                 if (currentUser) {
                         const token = localStorage.getItem("token")
                         if (token) {
-                                fetch(`http://localhost:3000/users/${currentUser.id}/watchlist`, {
+                                fetch(`${process.env.REACT_APP_RAILS_URL}/users/${currentUser.id}/watchlist`, {
                                         headers: {
                                                 Authorization: `Bearer ${token}`
                                         },
@@ -171,7 +171,7 @@ const MainPage = ({setCurrentUser, currentUser}) => {
                                         {userWatchlist ? (
                                                 <Watchlist currentUser={currentUser} userWatchlist={userWatchlist} handleWatchlistChanges={handleWatchlistChanges} players={players} />
                                                 ) : (
-                                                <Grid container xs={12} justify="center">
+                                                <Grid container item xs={12} justify="center">
                                                         <Grid item>
                                                                 Loading...
                                                                 <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />

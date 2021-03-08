@@ -133,7 +133,7 @@ const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChang
     const addPlayerToWatchlist = (rowId) => {
       const token = localStorage.getItem("token")
       if (token) {
-        fetch(`http://localhost:3000/watchlist_players/`, {
+        fetch(`${process.env.REACT_APP_RAILS_URL}/watchlist_players/`, {
           method: 'POST',
           headers: {
             "Content-Type": 'application/json',
@@ -160,7 +160,7 @@ const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChang
 
         const [player] = playerToDelete
         
-        fetch(`http://localhost:3000/watchlist_players/${player.id}`, {
+        fetch(`${process.env.REACT_APP_RAILS_URL}/watchlist_players/${player.id}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`
@@ -208,7 +208,10 @@ const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChang
       <Grid container justify="center" alignItems="center" direction="column">
         <Grid item xs={12} >
       
-          <MaterialTable title={`Player Stats as of ${new Date().toLocaleDateString()}`} data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
+          <MaterialTable title={`Player Stats as of ${new Date().toLocaleDateString()}`} data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
+                  backgroundColor: '#ff9800',
+                  color: '#FFF'
+                } }} />
 
         </Grid>
       </Grid>

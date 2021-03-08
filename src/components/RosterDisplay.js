@@ -20,7 +20,7 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
     
       const token = localStorage.getItem("token")
       if (token) {
-        fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
+        fetch(`${process.env.REACT_APP_RAILS_URL}/users/${currentUser.id}/rosters/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -46,7 +46,7 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
 
       const [player] = playerToDelete
 
-      fetch(`http://localhost:3000/roster_players/${player.id}`, {
+      fetch(`${process.env.REACT_APP_RAILS_URL}/roster_players/${player.id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`
@@ -70,7 +70,7 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
 
   if (!selectedRoster || !selectedRoster.score_setting) {
     return (
-      <Grid container xs={12} justify="center">
+      <Grid container item xs={12} justify="center">
         <Grid item>
           Loading...
           <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
@@ -245,18 +245,18 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
               </Grid>
             </Grid>
             <Grid container item xs={10} justify="flex-end" direction="row">
-                    <Grid item>
-                      <Link to={`/rosters/${id}/optimize`}>
-                        <Button variant="contained" color="primary">
-                            Optimize Lineup
-                        </Button>
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                        <Button onClick={handleAdd} variant="contained" color="primary">
-                            Add Players
-                        </Button>
-                    </Grid>     
+              <Grid item>
+                <Link to={`/rosters/${id}/optimize`}>
+                  <Button variant="contained" color="primary">
+                      Optimize Lineup
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item>
+                  <Button onClick={handleAdd} variant="contained" color="primary">
+                      Add Players
+                  </Button>
+              </Grid>     
             </Grid>
             <Grid container item xs={8} justify="center">
                 <Grid item>
@@ -272,10 +272,19 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
                 <Typography variant="h6">
                     {selectedRoster.slogan}
                 </Typography>
+                <Link to={`/rosters/${selectedRoster.id}/edit`}>
+                  <Button variant="contained" color="primary">
+                      Edit Roster Details
+                  </Button>
+                </Link>
               </Grid>
             </Grid>
             <Grid item xs={12} >
-                <MaterialTable title={`${selectedRoster.name}'s Projections for ${new Date().toLocaleDateString()}`} data={filteredPlayerPredictions} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
+                <MaterialTable title={`${selectedRoster.name}'s Projections for ${new Date().toLocaleDateString()}`} data={filteredPlayerPredictions} columns={columns} 
+                  options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
+                  backgroundColor: '#ff9800',
+                  color: '#FFF'
+                }}} />
             </Grid>
         </Grid>
         

@@ -20,7 +20,7 @@ const EditRosterDetails = ({currentUser, handleUpdateRoster}) => {
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (token) {
-            fetch(`http://localhost:3000/users/${currentUser.id}/rosters/${id}`, {
+            fetch(`${process.env.REACT_APP_RAILS_URL}/users/${currentUser.id}/rosters/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -54,7 +54,7 @@ const EditRosterDetails = ({currentUser, handleUpdateRoster}) => {
         e.preventDefault();
         const token = localStorage.getItem("token")
         if (token) {
-            fetch(`http://localhost:3000/rosters/${id}`, {
+            fetch(`${process.env.REACT_APP_RAILS_URL}/rosters/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

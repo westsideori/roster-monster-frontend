@@ -32,7 +32,7 @@ const NewRoster = ({currentUser, handleNewRoster}) => {
         e.preventDefault();
         const token = localStorage.getItem("token")
         if (token) {
-            fetch("http://localhost:3000/rosters", {
+            fetch(`${process.env.REACT_APP_RAILS_URL}/rosters`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

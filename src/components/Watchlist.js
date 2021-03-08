@@ -156,7 +156,7 @@ const Watchlist = ({players, userWatchlist, currentUser, handleWatchlistChanges}
 
       const [player] = playerToDelete
       
-      fetch(`http://localhost:3000/watchlist_players/${player.id}`, {
+      fetch(`${process.env.REACT_APP_RAILS_URL}/watchlist_players/${player.id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`
