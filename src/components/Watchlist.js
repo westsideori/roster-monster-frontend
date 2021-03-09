@@ -182,7 +182,10 @@ const Watchlist = ({players, userWatchlist, currentUser, handleWatchlistChanges}
       <Grid container justify="center" alignItems="center" direction="column">
         <Grid item xs={12} >
             
-            <MaterialTable title={`${currentUser.username}'s Watchlist`} data={filteredPlayers} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
+            <MaterialTable title={`${currentUser.username}'s Watchlist`} data={filteredPlayers} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
+                  backgroundColor: '#ff9800',
+                  color: '#FFF'
+                } }} />
         
         </Grid>
       </Grid>

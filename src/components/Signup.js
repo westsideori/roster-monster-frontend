@@ -27,7 +27,7 @@ const Signup = ({setCurrentUser}) => {
     const handleSignup = (e) => {
         e.preventDefault();
         // POST /signup
-        fetch(`${process.env.REACT_APP_RAILS_URL}signup`, {
+        fetch(`${process.env.REACT_APP_RAILS_URL}/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

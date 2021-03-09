@@ -239,7 +239,10 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
               <Button variant="contained" onClick={() => isNewRoster ? history.push(`/rosters/${id}/scoring/new`) : history.push(`/rosters/${id}`)}>
                 Save
               </Button>
-              <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
+              <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
+                  backgroundColor: '#ff9800',
+                  color: '#FFF'
+                } }} />
             </>
           ) : (
             <Grid container item xs={12} justify="center">

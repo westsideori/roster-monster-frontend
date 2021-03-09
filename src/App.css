@@ -57,3 +57,32 @@ a {
   width: 95%;
   margin: auto;
 }
+
+.MuiTypography-h3.MuiTypography-root {
+  margin-bottom: 25px;
+  letter-spacing: -1px;
+}
+
+table thead th.MuiTableCell-root.MuiTableCell-head.MTableHeader-header-14.MuiTableCell-alignLeft {
+  font-weight: 800;
+  line-height: 17px;
+}
+
+.MTableToolbar-title-10 h6 {
+  color: darkgrey;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.single-player-table .MuiToolbar-root.MuiToolbar-regular.MTableToolbar-root-6.MuiToolbar-gutters {
+  display: none;
+}
+
+.MuiGrid-spacing-xs-3 > .MuiGrid-item.single-player-image {
+  padding-bottom: 0;
+}
+
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12 h5 {
+  color: darkgray;
+  font-size: 20px;
+}

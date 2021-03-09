@@ -513,7 +513,10 @@ const LineupOptimizer = ({playerPredictions, currentUser}) => {
             </Link>
           </Grid>
           <Grid item xs={12} >
-            <MaterialTable title={`${selectedRoster.name}'s Projections for ${new Date().toLocaleDateString()}`} data={optimizedLineup} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10 }} />
+            <MaterialTable title={`${selectedRoster.name}'s Optimized Lineup for ${new Date().toLocaleDateString()}`} data={optimizedLineup} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
+                  backgroundColor: '#ff9800',
+                  color: '#FFF'
+                } }} />
           </Grid>
           </>
         ) : (

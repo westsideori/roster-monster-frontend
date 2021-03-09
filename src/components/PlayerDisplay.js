@@ -227,7 +227,7 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
       <Grid container justify="flex-start"  alignItems="center" spacing={3} >
           
             {!displayedPlayer ? (
-              <Grid container xs={12} justify="center">
+              <Grid container item xs={12} justify="center">
                 <Grid item>
                   Loading...
                   <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
@@ -235,7 +235,7 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
               </Grid>
               ) : (
                 <>
-                <Grid container item xs={6} justify="flex-end" >
+                <Grid container item xs={6} justify="flex-end" className="single-player-image">
                   <Grid item>
                     <img src={displayedPlayer[0].image} alt={displayedPlayer[0].name}/>
                   </Grid>
@@ -258,8 +258,11 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
                   
                   </Grid>
                 </Grid>
-                <Grid container justify="center" alignItems="center" direction="column">
-                  <MaterialTable title="" data={displayedPlayer} columns={columns} options={{ sorting: false, search: false }} />
+                <Grid container justify="center" alignItems="center" direction="column" className="single-player-table">
+                  <MaterialTable title="" data={displayedPlayer} columns={columns} options={{ paging: false, sorting: false, search: false, headerStyle: {
+                  backgroundColor: '#ff9800',
+                  color: '#FFF'
+                } }} />
                 </Grid>
                 </>
               )

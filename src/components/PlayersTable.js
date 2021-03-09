@@ -2,6 +2,7 @@ import MaterialTable from "material-table";
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import { Typography } from "@material-ui/core";
 
 
 const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChanges}) => {
@@ -207,8 +208,10 @@ const PlayersTable = ({players, currentUser, userWatchlist, handleWatchlistChang
     return (
       <Grid container justify="center" alignItems="center" direction="column">
         <Grid item xs={12} >
-      
-          <MaterialTable title={`Player Stats as of ${new Date().toLocaleDateString()}`} data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
+          <Typography variant="h3" color="primary">
+            Player Stats
+          </Typography>
+          <MaterialTable title={`As of ${new Date().toLocaleDateString()}`} data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
                   backgroundColor: '#ff9800',
                   color: '#FFF'
                 } }} />
