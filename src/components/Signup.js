@@ -63,7 +63,7 @@ const Signup = ({setCurrentUser}) => {
                         
                     <Grid container item xs={3} spacing={3}>
                         <Grid item>
-                            <Typography variant="h6" color="primary">Signup</Typography>
+                            <Typography variant="h3" color="primary">Signup</Typography>
                         </Grid>
                         <Grid item>
                             <TextField
@@ -97,7 +97,7 @@ const Signup = ({setCurrentUser}) => {
                             {errors.map((error, index) => {
                                 return (
                                     <Grid item key={index}>
-                                        <Typography variant="h6" color="error">
+                                        <Typography variant="body1" color="error">
                                             {error}
                                         </Typography>
                                     </Grid>

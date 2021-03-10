@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 
+
 const RosterDisplay = ({playerPredictions, currentUser}) => {
   
   
@@ -280,11 +281,21 @@ const RosterDisplay = ({playerPredictions, currentUser}) => {
               </Grid>
             </Grid>
             <Grid item xs={12} >
-                <MaterialTable title={`${selectedRoster.name}'s Projections for ${new Date().toLocaleDateString()}`} data={filteredPlayerPredictions} columns={columns} 
-                  options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
-                  backgroundColor: '#ff9800',
-                  color: '#FFF'
-                }}} />
+                <MaterialTable 
+                  title={`${selectedRoster.name}'s Projections for ${new Date().toLocaleDateString()}`} 
+                  data={filteredPlayerPredictions} 
+                  columns={columns} 
+                  options={
+                    { sorting: true, 
+                      maxBodyHeight: '500px', 
+                      pageSize: 10, 
+                      headerStyle: {
+                        backgroundColor: '#ff9800',
+                        color: '#FFF'
+                      }
+                    }
+                  }
+                />
             </Grid>
         </Grid>
         

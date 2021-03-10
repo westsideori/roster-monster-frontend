@@ -49,9 +49,10 @@ a {
   font-size: xx-large;
 } */
 
-/* body {
-  overflow: visible;
-} */
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
 
 .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-10.MuiGrid-align-items-xs-flex-start.MuiGrid-justify-xs-center {
   width: 95%;
@@ -63,7 +64,7 @@ a {
   letter-spacing: -1px;
 }
 
-table thead th.MuiTableCell-root.MuiTableCell-head.MTableHeader-header-14.MuiTableCell-alignLeft {
+table thead th.MuiTableCell-root.MuiTableCell-head.MuiTableCell-alignLeft {
   font-weight: 800;
   line-height: 17px;
 }
@@ -74,15 +75,38 @@ table thead th.MuiTableCell-root.MuiTableCell-head.MTableHeader-header-14.MuiTab
   font-style: italic;
 }
 
-.single-player-table .MuiToolbar-root.MuiToolbar-regular.MTableToolbar-root-6.MuiToolbar-gutters {
+.single-player-table .MuiToolbar-root {
   display: none;
 }
 
 .MuiGrid-spacing-xs-3 > .MuiGrid-item.single-player-image {
   padding-bottom: 0;
+  margin-bottom: -3px;
 }
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12 h5 {
   color: darkgray;
   font-size: 20px;
+}
+
+button.MuiButtonBase-root.MuiIconButton-root {
+  float: right;
+  padding: 0;
+}
+
+a {
+  color: #ff9800;
+  font-weight: 600;
+}
+
+a:hover {
+  color: rgb(216, 101, 8);
+}
+
+header a {
+  color: white;
+}
+
+header a:hover {
+  color: whitesmoke;
 }

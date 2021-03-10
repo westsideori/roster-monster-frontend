@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { useHistory, useParams } from 'react-router-dom'
 import { useState, useEffect } from "react";
+import { Typography } from "@material-ui/core";
 
 
 const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
@@ -236,13 +237,16 @@ const AddRosterPlayers = ({players, isNewRoster, currentUser}) => {
         <Grid container justify="center" alignItems="center" direction="column">
           {currentRoster ? (
             <>
-              <Button variant="contained" onClick={() => isNewRoster ? history.push(`/rosters/${id}/scoring/new`) : history.push(`/rosters/${id}`)}>
-                Save
-              </Button>
-              <MaterialTable title="Players" data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
+              <Typography variant="h3" color="primary">
+                Add Players To Roster
+              </Typography>
+              <MaterialTable title="" data={players} columns={columns} options={{ sorting: true, maxBodyHeight: '500px', pageSize: 10, headerStyle: {
                   backgroundColor: '#ff9800',
                   color: '#FFF'
                 } }} />
+              <Button style={{marginTop: "20px"}} variant="contained" color="primary" onClick={() => isNewRoster ? history.push(`/rosters/${id}/scoring/new`) : history.push(`/rosters/${id}`)}>
+                Save
+              </Button>
             </>
           ) : (
             <Grid container item xs={12} justify="center">

@@ -54,68 +54,70 @@ const NewRoster = ({currentUser, handleNewRoster}) => {
 
     return (
         <Grid container justify="center" alignItems="center" direction="column">
-            <form onSubmit={handleSubmit}>
-                <Grid container >
-                    <Grid container item xs={12} spacing={3} direction="column">
-                        <Typography variant="h4">Create Roster</Typography>
-                        <Grid item xs={12}>
-                            <TextField 
-                                name="name"
-                                label="Roster Name"
-                                variant="outlined"
-                                onChange={handleChange}
-                                value={formData.name}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <TextField 
-                                name="league"
-                                label="League Name"
-                                variant="outlined"
-                                onChange={handleChange}
-                                value={formData.league}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <TextField 
-                                name="season"
-                                label="Season"
-                                variant="outlined"
-                                onChange={handleChange}
-                                value={formData.season}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <TextField 
-                                name="slogan"
-                                label="Slogan"
-                                variant="outlined"
-                                onChange={handleChange}
-                                value={formData.slogan}
-                            />
-                        </Grid>
-                        <Grid container xs={4} item>
-                            {errors.map((error) => {
-                                return (
-                                    <Grid key={error} item>
-                                        <Typography variant="h6">
-                                            {error}
-                                        </Typography>
-                                    </Grid>
-                                )
-                            })}
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary">
-                                    Create Team
-                            </Button>
+            <Typography variant="h3" color="primary">Create Roster</Typography>
+            <Grid container  justify="center" item xs={12}>               
+                <form onSubmit={handleSubmit}>
+                    <Grid container >
+                        <Grid container item xs={12} spacing={3} direction="column">                     
+                            <Grid item xs={12}>
+                                <TextField 
+                                    name="name"
+                                    label="Roster Name"
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    value={formData.name}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <TextField 
+                                    name="league"
+                                    label="League Name"
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    value={formData.league}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <TextField 
+                                    name="season"
+                                    label="Season"
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    value={formData.season}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <TextField 
+                                    name="slogan"
+                                    label="Slogan"
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    value={formData.slogan}
+                                />
+                            </Grid>
+                            <Grid container xs={12} item direction="column">
+                                {errors.map((error) => {
+                                    return (
+                                        <Grid key={error} item>
+                                            <Typography variant="body1" color="error">
+                                                {error}
+                                            </Typography>
+                                        </Grid>
+                                    )
+                                })}
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary">
+                                        Create Team
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </form>
+                </form>
+            </Grid>
         </Grid>
         
     )

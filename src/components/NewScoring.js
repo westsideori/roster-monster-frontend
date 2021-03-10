@@ -64,11 +64,12 @@ const NewScoring = ({setIsNewRoster}) => {
 
     return (
         <Grid container justify="center" alignItems="center" direction="column">
+            <Typography color="primary" variant="h3">Scoring Settings</Typography>
             <form onSubmit={handleSubmit}>
-                <Grid container >
-                    <Grid container item xs={12} spacing={3} direction="column">
-                        <Typography variant="h4">Set Scoring</Typography>
-                        <Grid item xs={12}>
+                <Grid container justify="center">
+                    <Grid container item xs={4} spacing={3} direction="row">
+                        
+                        <Grid item>
                             <InputLabel>
                                 Points
                             </InputLabel>
@@ -236,16 +237,17 @@ const NewScoring = ({setIsNewRoster}) => {
                                 onChange={handleChange}
                                 value={formData.free_throws_attempted}
                             />
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary">
-                                    Save
-                            </Button>
-                        </Grid>
-                    </Grid>
+                        </Grid>                 
+                    </Grid>                   
+                </Grid>
+                <Grid container justify="center" item>
+                    <Button
+                        style={{marginTop: "20px"}}
+                        type="submit"
+                        variant="contained"
+                        color="primary">
+                            Save
+                    </Button>
                 </Grid>
             </form>
         </Grid>
