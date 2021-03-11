@@ -149,6 +149,22 @@ header a.active:hover {
   flex: 0.93 0 5%;
 }
 
+/* table h6.MuiTypography-root.MuiTypography-h6 {
+  color: darkgray;
+  font-style: italic;
+} */
+
+.MuiToolbar-root.MuiToolbar-regular.MTableToolbar-root-10.MuiToolbar-gutters
+  h6 {
+  color: darkgray;
+  font-style: italic;
+}
+
+.MuiToolbar-root.MuiToolbar-regular.MTableToolbar-root-10.MuiToolbar-gutters
+  h6:hover {
+  color: #ff9800;
+}
+
 /* .MuiListItem-button:hover {
   text-decoration: none;
   background-color: #ff9800;
@@ -158,10 +174,10 @@ header a.active:hover {
   display: contents;
 } */
 
-li.MuiListItem-button:hover {
+/* li.MuiListItem-button:hover {
   text-decoration: none;
   background-color: #ff9800;
-}
+} */
 
 a.active li:hover {
   background-color: rgb(216, 101, 8);
