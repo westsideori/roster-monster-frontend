@@ -3,6 +3,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleSharpIcon from "@material-ui/icons/AddCircleSharp";
 
 const RostersList = ({
   currentUser,
@@ -36,13 +38,13 @@ const RostersList = ({
         <Grid container item xs={4} justify="flex-end">
           <Grid item>
             <Link to={`/rosters/new`}>
-              <Button
+              <IconButton
                 onClick={() => setIsNewRoster(true)}
                 variant="contained"
                 color="primary"
               >
-                Create New Roster
-              </Button>
+                <AddCircleSharpIcon style={{ height: "50px", width: "50px" }} />
+              </IconButton>
             </Link>
           </Grid>
         </Grid>

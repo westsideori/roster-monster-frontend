@@ -49,36 +49,6 @@ const LineupOptimizer = ({ playerPredictions, currentUser }) => {
     }
   }, [id, currentUser]);
 
-  // const removePlayer = (rowId, apiId) => {
-  //   const token = localStorage.getItem("token")
-  //   if (token) {
-  //     let playerToDelete = selectedRoster.roster_players.filter((rp) => {
-  //       return rp.player_id === rowId && rp.roster_id === selectedRoster.id
-  //     })
-
-  //     const [player] = playerToDelete
-
-  //     fetch(`http://localhost:3000/roster_players/${player.id}`, {
-  //       method: 'DELETE',
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     })
-  //       .then(handleRemove(apiId))
-  //   }
-  // }
-
-  // const handleRemove = (apiId) => {
-  //   let filteredIds = playerIds.filter((id) => {
-  //     return id !== apiId
-  //   })
-  //   setPlayerIds(filteredIds)
-  // }
-
-  // const handleAdd = (e) => {
-  //   history.push(`/rosters/${id}/players/add`)
-  // }
-
   if (!selectedRoster || !selectedRoster.score_setting) {
     return (
       <Grid container xs={12} justify="center">
@@ -111,10 +81,6 @@ const LineupOptimizer = ({ playerPredictions, currentUser }) => {
       setting !== "updated_at"
     );
   });
-
-  console.log("settings", settings);
-
-  // const settings = []
 
   const columns = [
     {
@@ -228,12 +194,6 @@ const LineupOptimizer = ({ playerPredictions, currentUser }) => {
   let fantasyColumn = {
     title: "Fantasy Points",
     field: "fantasyPoints",
-    // customSort: (a, b) => {
-    //   return (((a.Games * selectedRoster.score_setting['games_played']) + (a.FieldGoalsAttempted * selectedRoster.score_setting['field_goals_attempted']) + (a.FieldGoalsMade * selectedRoster.score_setting['field_goals_made']) + (a.ThreePointersAttempted * selectedRoster.score_setting['threes_attempted']) + (a.ThreePointersMade * selectedRoster.score_setting['threes_made']) + (a.FreeThrowsAttempted * selectedRoster.score_setting['free_throws_attempted']) + (a.FreeThrowsMade * selectedRoster.score_setting['free_throws_made']) + (a.Points * selectedRoster.score_setting['points']) + (a.Rebounds * selectedRoster.score_setting['rebounds']) + (a.Assists * selectedRoster.score_setting['assists']) + (a.Steals * selectedRoster.score_setting['steals']) + (a.BlockedShots * selectedRoster.score_setting['blocks']) + (a.Turnovers * selectedRoster.score_setting['turnovers'])) - ((b.Games * selectedRoster.score_setting['games_played']) + (b.FieldGoalsAttempted * selectedRoster.score_setting['field_goals_attempted']) + (b.FieldGoalsMade * selectedRoster.score_setting['field_goals_made']) + (b.ThreePointersAttempted * selectedRoster.score_setting['threes_attempted']) + (b.ThreePointersMade * selectedRoster.score_setting['threes_made']) + (b.FreeThrowsAttempted * selectedRoster.score_setting['free_throws_attempted']) + (b.FreeThrowsMade * selectedRoster.score_setting['free_throws_made']) + (b.Points * selectedRoster.score_setting['points']) + (b.Rebounds * selectedRoster.score_setting['rebounds']) + (b.Assists * selectedRoster.score_setting['assists']) + (b.Steals * selectedRoster.score_setting['steals']) + (b.BlockedShots * selectedRoster.score_setting['blocks']) + (b.Turnovers * selectedRoster.score_setting['turnovers'])))
-    // },
-    // render: rowData => {
-    //   return Math.round((rowData.Games * selectedRoster.score_setting['games_played']) + (rowData.FieldGoalsAttempted * selectedRoster.score_setting['field_goals_attempted']) + (rowData.FieldGoalsMade * selectedRoster.score_setting['field_goals_made']) + (rowData.ThreePointersAttempted * selectedRoster.score_setting['threes_attempted']) + (rowData.ThreePointersMade * selectedRoster.score_setting['threes_made']) + (rowData.FreeThrowsAttempted * selectedRoster.score_setting['free_throws_attempted']) + (rowData.FreeThrowsMade * selectedRoster.score_setting['free_throws_made']) + (rowData.Points * selectedRoster.score_setting['points']) + (rowData.Rebounds * selectedRoster.score_setting['rebounds']) + (rowData.Assists * selectedRoster.score_setting['assists']) + (rowData.Steals * selectedRoster.score_setting['steals']) + (rowData.BlockedShots * selectedRoster.score_setting['blocks']) + (rowData.Turnovers * selectedRoster.score_setting['turnovers']))
-    // }
   };
 
   // 1. separate players into arrays by position
@@ -536,11 +496,15 @@ const LineupOptimizer = ({ playerPredictions, currentUser }) => {
               </Typography>
             </Grid>
             <Grid item xs={8}>
-              <Typography variant="h6">
-                {selectedRoster.league} | {selectedRoster.season}
+              <Typography variant="h6" style={{ color: "darkgray" }}>
+                <b>
+                  {selectedRoster.league} | {selectedRoster.season}
+                </b>
               </Typography>
-              <Typography variant="h6">
-                <i>"{selectedRoster.slogan}"</i>
+              <Typography variant="h6" color="primary">
+                <b>
+                  <i>"{selectedRoster.slogan}"</i>
+                </b>
               </Typography>
               <Link to={`/rosters/${selectedRoster.id}/`}>
                 <Button variant="contained" color="primary">

@@ -5,6 +5,9 @@ import { Grid } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleSharpIcon from "@material-ui/icons/AddCircleSharp";
+import RemoveCircleSharpIcon from "@material-ui/icons/RemoveCircleSharp";
 
 const RosterDisplay = ({ playerPredictions, currentUser }) => {
   const { id } = useParams();
@@ -282,13 +285,13 @@ const RosterDisplay = ({ playerPredictions, currentUser }) => {
     field: "",
     sorting: false,
     render: (rowData) => (
-      <Button
+      <IconButton
         color="primary"
         variant="contained"
         onClick={() => removePlayer(rowData.id, rowData.api_id)}
       >
-        Remove
-      </Button>
+        <RemoveCircleSharpIcon style={{ height: "35px", width: "35px" }} />
+      </IconButton>
     ),
   };
 
@@ -348,9 +351,9 @@ const RosterDisplay = ({ playerPredictions, currentUser }) => {
             </Link>
           </Grid>
           <Grid item>
-            <Button onClick={handleAdd} variant="contained" color="primary">
-              Add Players
-            </Button>
+            <IconButton onClick={handleAdd} variant="contained" color="primary">
+              <AddCircleSharpIcon style={{ height: "35px", width: "35px" }} />
+            </IconButton>
           </Grid>
         </Grid>
       </Grid>

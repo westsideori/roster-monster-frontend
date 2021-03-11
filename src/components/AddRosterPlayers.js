@@ -5,6 +5,9 @@ import Grid from "@material-ui/core/Grid";
 import { useHistory, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Typography } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleSharpIcon from "@material-ui/icons/AddCircleSharp";
+import RemoveCircleSharpIcon from "@material-ui/icons/RemoveCircleSharp";
 
 const AddRosterPlayers = ({ players, isNewRoster, currentUser }) => {
   const [currentRoster, setCurrentRoster] = useState(null);
@@ -203,23 +206,25 @@ const AddRosterPlayers = ({ players, isNewRoster, currentUser }) => {
       render: (rowData) => {
         if (isPlayerOnRoster(rowData.id)) {
           return (
-            <Button
+            <IconButton
               color="primary"
               variant="contained"
               onClick={() => removePlayerFromRoster(rowData)}
             >
-              Remove
-            </Button>
+              <RemoveCircleSharpIcon
+                style={{ height: "35px", width: "35px" }}
+              />
+            </IconButton>
           );
         } else {
           return (
-            <Button
+            <IconButton
               color="primary"
               variant="contained"
               onClick={() => addPlayerToRoster(rowData)}
             >
-              Add
-            </Button>
+              <AddCircleSharpIcon style={{ height: "35px", width: "35px" }} />
+            </IconButton>
           );
         }
       },

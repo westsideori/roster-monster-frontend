@@ -1,8 +1,9 @@
 import MaterialTable from "material-table";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import RemoveCircleSharpIcon from "@material-ui/icons/RemoveCircleSharp";
 
 const Watchlist = ({
   players,
@@ -141,13 +142,13 @@ const Watchlist = ({
       sorting: false,
       render: (rowData) => {
         return (
-          <Button
+          <IconButton
             onClick={() => removePlayerFromWatchlist(rowData.id)}
             variant="contained"
             color="primary"
           >
-            Remove
-          </Button>
+            <RemoveCircleSharpIcon style={{ height: "35px", width: "35px" }} />
+          </IconButton>
         );
       },
     },

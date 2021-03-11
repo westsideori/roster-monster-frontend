@@ -77,6 +77,10 @@ table thead th.MuiTableCell-root.MuiTableCell-head.MuiTableCell-alignLeft {
   font-style: italic;
 }
 
+.MTableToolbar-title-10 h6:hover {
+  color: #ff9800;
+}
+
 .single-player-table .MuiToolbar-root {
   display: none;
 }
@@ -94,6 +98,11 @@ table thead th.MuiTableCell-root.MuiTableCell-head.MuiTableCell-alignLeft {
 button.MuiButtonBase-root.MuiIconButton-root {
   float: right;
   padding: 0;
+}
+button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorPrimary:hover {
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  background-color: rgb(178, 106, 0);
 }
 
 button.MuiButton-containedPrimary {
@@ -116,24 +125,44 @@ header a {
 
 header a.active:hover {
   color: whitesmoke;
+  background-color: rgb(216, 101, 8);
 }
+
+/* a.active:hover {
+  background-color: none;
+} */
 
 /* h6.MuiTypography-root.MuiTypography-h6:hover {
   
 } */
 
-.MTableToolbar-title-10 h6:hover {
+.MTableToolbar-title-11 h6:hover {
   color: #ff9800;
+}
+
+.MTableToolbar-title-11 h6 {
+  font-style: italic;
+  color: darkgray;
 }
 
 .MTableToolbar-spacer-8 {
   flex: 0.93 0 5%;
 }
 
-.MuiListItem-button:hover {
-  background-color: none;
-}
+/* .MuiListItem-button:hover {
+  text-decoration: none;
+  background-color: #ff9800;
+} */
 
 /* .MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-justify-xs-flex-end.MuiGrid-grid-xs-8 {
   display: contents;
 } */
+
+li.MuiListItem-button:hover {
+  text-decoration: none;
+  background-color: #ff9800;
+}
+
+a.active li:hover {
+  background-color: rgb(216, 101, 8);
+}
