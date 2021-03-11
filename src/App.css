@@ -39,6 +39,7 @@
 
 a.active {
   background-color: rgb(216, 101, 8);
+  padding: 10px 0;
 }
 
 a {
@@ -71,7 +72,8 @@ table thead th.MuiTableCell-root.MuiTableCell-head.MuiTableCell-alignLeft {
 
 .MTableToolbar-title-10 h6 {
   color: darkgrey;
-  font-weight: 800;
+  font-weight: 500;
+  font-size: 18px;
   font-style: italic;
 }
 
@@ -94,6 +96,11 @@ button.MuiButtonBase-root.MuiIconButton-root {
   padding: 0;
 }
 
+button.MuiButton-containedPrimary {
+  color: white;
+  font-weight: 600;
+}
+
 a {
   color: #ff9800;
   font-weight: 600;
@@ -107,6 +114,26 @@ header a {
   color: white;
 }
 
-header a:hover {
+header a.active:hover {
   color: whitesmoke;
 }
+
+/* h6.MuiTypography-root.MuiTypography-h6:hover {
+  
+} */
+
+.MTableToolbar-title-10 h6:hover {
+  color: #ff9800;
+}
+
+.MTableToolbar-spacer-8 {
+  flex: 0.93 0 5%;
+}
+
+.MuiListItem-button:hover {
+  background-color: none;
+}
+
+/* .MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-justify-xs-flex-end.MuiGrid-grid-xs-8 {
+  display: contents;
+} */

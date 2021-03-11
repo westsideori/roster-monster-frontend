@@ -1,44 +1,47 @@
-import Grid from '@material-ui/core/Grid'
+import Grid from "@material-ui/core/Grid";
 import MaterialTable from "material-table";
-import { Typography } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react'
-import Button from '@material-ui/core/Button'
+import { Typography } from "@material-ui/core";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Button from "@material-ui/core/Button";
 
+const PlayerDisplay = ({
+  players,
+  userWatchlist,
+  handleWatchlistChanges,
+  currentUser,
+}) => {
+  const [displayedPlayer, setDisplayedPlayer] = useState(null);
 
-const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentUser}) => {
-  
+  const { id } = useParams();
 
-  const [displayedPlayer, setDisplayedPlayer] = useState(null)
-
-  const {id} = useParams()
-  
   useEffect(() => {
-   
-    
     if (players.length > 0) {
       const player = players.filter((player) => {
-        
-        return player.id === parseInt(id)
+        return player.id === parseInt(id);
+      });
 
-      })
-      
-      setDisplayedPlayer(player)
+      setDisplayedPlayer(player);
     }
-  }, [id, players])
+  }, [id, players]);
 
-  
-  console.log(displayedPlayer)
-  
+  console.log(displayedPlayer);
+
   const columns = [
     {
       title: "Name",
       field: "name",
-      render: rowData => <a href={`https://sports.yahoo.com/nba/players/${rowData.yahoo_id}/news/`} target="_blank" rel="noreferrer">{`${rowData.name}`}</a>
+      render: (rowData) => (
+        <a
+          href={`https://sports.yahoo.com/nba/players/${rowData.yahoo_id}/news/`}
+          target="_blank"
+          rel="noreferrer"
+        >{`${rowData.name}`}</a>
+      ),
     },
     {
       title: "Team",
-      field: "team"
+      field: "team",
     },
     {
       title: "Position",
@@ -51,227 +54,241 @@ const PlayerDisplay = ({players, userWatchlist, handleWatchlistChanges, currentU
     {
       title: "Points Per Game",
       field: "Points",
-      customSort: (a, b) => (a.Points/a.Games) - (b.Points/b.Games),
-      render: rowData => {
-
+      customSort: (a, b) => a.Points / a.Games - b.Points / b.Games,
+      render: (rowData) => {
         if (rowData.Points) {
-          return Math.round(rowData.Points / rowData.Games)
+          return Math.round(rowData.Points / rowData.Games);
         } else {
-          return 0
+          return 0;
         }
-        
-      }
+      },
     },
     {
       title: "Rebounds Per Game",
       field: "Rebounds",
-      customSort: (a, b) => (a.Rebounds/a.Games) - (b.Rebounds/b.Games),
-      render: rowData => {
-
+      customSort: (a, b) => a.Rebounds / a.Games - b.Rebounds / b.Games,
+      render: (rowData) => {
         if (rowData.Rebounds) {
-          return Math.round(rowData.Rebounds / rowData.Games)
+          return Math.round(rowData.Rebounds / rowData.Games);
         } else {
-          return 0
+          return 0;
         }
-        
-      }
+      },
     },
     {
       title: "Assists Per Game",
       field: `Assists`,
-      customSort: (a, b) => (a.Assists/a.Games) - (b.Assists/b.Games),
-      render: rowData => {
-
+      customSort: (a, b) => a.Assists / a.Games - b.Assists / b.Games,
+      render: (rowData) => {
         if (rowData.Assists) {
-          return Math.round(rowData.Assists / rowData.Games)
+          return Math.round(rowData.Assists / rowData.Games);
         } else {
-          return 0
+          return 0;
         }
-        
-      }
+      },
     },
     {
       title: "Steals Per Game",
       field: "Steals",
-      customSort: (a, b) => (a.Steals/a.Games) - (b.Steals/b.Games),
-      render: rowData => {
-
+      customSort: (a, b) => a.Steals / a.Games - b.Steals / b.Games,
+      render: (rowData) => {
         if (rowData.Steals) {
-          return Math.round(rowData.Steals / rowData.Games)
+          return Math.round(rowData.Steals / rowData.Games);
         } else {
-          return 0
+          return 0;
         }
-        
-      }
+      },
     },
     {
       title: "Blocks Per Game",
       field: "BlockedShots",
-      customSort: (a, b) => (a.BlockedShots/a.Games) - (b.BlockedShots/b.Games),
-      render: rowData => {
-
+      customSort: (a, b) => a.BlockedShots / a.Games - b.BlockedShots / b.Games,
+      render: (rowData) => {
         if (rowData.BlockedShots) {
-          return Math.round(rowData.BlockedShots / rowData.Games)
+          return Math.round(rowData.BlockedShots / rowData.Games);
         } else {
-          return 0
+          return 0;
         }
-        
-      }
+      },
     },
     {
       title: "Turnovers Per Game",
       field: "Turnovers",
-      customSort: (a, b) => (a.Turnovers/a.Games) - (b.Turnovers/b.Games),
-      render: rowData => {
-
+      customSort: (a, b) => a.Turnovers / a.Games - b.Turnovers / b.Games,
+      render: (rowData) => {
         if (rowData.Turnovers) {
-          return Math.round(rowData.Turnovers / rowData.Games)
+          return Math.round(rowData.Turnovers / rowData.Games);
         } else {
-          return 0
+          return 0;
         }
-        
-      }
+      },
     },
     {
       title: "Fouls Per Game",
       field: "PersonalFouls",
-      customSort: (a, b) => (a.PersonalFouls/a.Games) - (b.PersonalFouls/b.Games),
-      render: rowData => {
-
+      customSort: (a, b) =>
+        a.PersonalFouls / a.Games - b.PersonalFouls / b.Games,
+      render: (rowData) => {
         if (rowData.PersonalFouls) {
-          return Math.round(rowData.PersonalFouls / rowData.Games)
+          return Math.round(rowData.PersonalFouls / rowData.Games);
         } else {
-          return 0
+          return 0;
         }
-        
-      }
+      },
     },
-    
   ];
 
   const addPlayerToWatchlist = (rowId) => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     if (token) {
       fetch(`${process.env.REACT_APP_RAILS_URL}/watchlist_players/`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          "Content-Type": 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           watchlist_id: userWatchlist.id,
-          player_id: rowId
-        })
+          player_id: rowId,
+        }),
       })
-        .then(resp => resp.json())
+        .then((resp) => resp.json())
         .then((data) => {
-          handleWatchlistChanges()
-        })
+          handleWatchlistChanges();
+        });
     }
-  }
+  };
 
   const removePlayerFromWatchlist = (rowId) => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     if (token) {
       let playerToDelete = userWatchlist.watchlist_players.filter((wp) => {
-        return wp.player_id === rowId && wp.watchlist_id === userWatchlist.id
-      })
+        return wp.player_id === rowId && wp.watchlist_id === userWatchlist.id;
+      });
 
-      const [player] = playerToDelete
-      
-      fetch(`${process.env.REACT_APP_RAILS_URL}/watchlist_players/${player.id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`
+      const [player] = playerToDelete;
+
+      fetch(
+        `${process.env.REACT_APP_RAILS_URL}/watchlist_players/${player.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-        .then(() => handleWatchlistChanges())
+      ).then(() => handleWatchlistChanges());
     }
-  }
+  };
 
   const isPlayerInWatchlist = (id) => {
-    
-      const foundPlayer = userWatchlist.watchlist_players.filter((player) => {
-        return player.player_id === id
-      })
-      
-      if (foundPlayer.length === 1) {
-        return true
-      } else {
-        return false
-      }
-  }
+    const foundPlayer = userWatchlist.watchlist_players.filter((player) => {
+      return player.player_id === id;
+    });
+
+    if (foundPlayer.length === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   let watchlistColumn = {
     title: "Watchlist",
     field: "",
     sorting: false,
-    render: rowData => {
-      
+    render: (rowData) => {
       if (isPlayerInWatchlist(rowData.id)) {
-        return <Button onClick={() => removePlayerFromWatchlist(rowData.id)} variant="contained" color="primary">Remove</Button>
+        return (
+          <Button
+            onClick={() => removePlayerFromWatchlist(rowData.id)}
+            variant="contained"
+            color="primary"
+          >
+            Remove
+          </Button>
+        );
       } else {
-        return <Button onClick={() => addPlayerToWatchlist(rowData.id)} variant="contained" color="primary">Add</Button>
+        return (
+          <Button
+            onClick={() => addPlayerToWatchlist(rowData.id)}
+            variant="contained"
+            color="primary"
+          >
+            Add
+          </Button>
+        );
       }
-    }
-  }
+    },
+  };
 
   if (currentUser) {
-    columns.push(watchlistColumn)
+    columns.push(watchlistColumn);
   }
 
-  
-
   return (
-        
-      <Grid container justify="flex-start"  alignItems="center" spacing={3} >
-          
-            {!displayedPlayer ? (
-              <Grid container item xs={12} justify="center">
-                <Grid item>
-                  Loading...
-                  <img src='https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif' alt="Basketball" />
-                </Grid>
-              </Grid>
-              ) : (
-                <>
-                <Grid container item xs={6} justify="flex-end" className="single-player-image">
-                  <Grid item>
-                    <img src={displayedPlayer[0].image} alt={displayedPlayer[0].name}/>
-                  </Grid>
-                </Grid>
-                <Grid container item xs={3} justify="center">
-                  <Grid item xs={12}>
-                  
-                    <Typography variant="h3">
-                        {displayedPlayer[0].name}
-                    </Typography>
-                    <Typography variant="h5">
-                        {displayedPlayer[0].team}
-                    </Typography>
-                    <Typography variant="h5">
-                        {displayedPlayer[0].position}
-                    </Typography>
-                    <Typography variant="h5">
-                        {displayedPlayer[0].college}
-                    </Typography>
-                  
-                  </Grid>
-                </Grid>
-                <Grid container justify="center" alignItems="center" direction="column" className="single-player-table">
-                  <MaterialTable title="" data={displayedPlayer} columns={columns} options={{ paging: false, sorting: false, search: false, headerStyle: {
-                  backgroundColor: '#ff9800',
-                  color: '#FFF'
-                } }} />
-                </Grid>
-                </>
-              )
-            }
-          
-           
-          
-      </Grid>
-  )
-}
+    <Grid container justify="flex-start" alignItems="center" spacing={3}>
+      {!displayedPlayer ? (
+        <Grid container item xs={12} justify="center">
+          <Grid item>
+            Loading...
+            <img
+              src="https://media.giphy.com/media/H75Uk3F2X1PATByXrk/giphy.gif"
+              alt="Basketball"
+            />
+          </Grid>
+        </Grid>
+      ) : (
+        <>
+          <Grid
+            container
+            item
+            xs={6}
+            justify="flex-end"
+            className="single-player-image"
+          >
+            <Grid item>
+              <img
+                src={displayedPlayer[0].image}
+                alt={displayedPlayer[0].name}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item xs={3} justify="center">
+            <Grid item xs={12}>
+              <Typography variant="h3">{displayedPlayer[0].name}</Typography>
+              <Typography variant="h5">{displayedPlayer[0].team}</Typography>
+              <Typography variant="h5">
+                {displayedPlayer[0].position}
+              </Typography>
+              <Typography variant="h5">{displayedPlayer[0].college}</Typography>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            direction="column"
+            className="single-player-table"
+          >
+            <MaterialTable
+              title=""
+              data={displayedPlayer}
+              columns={columns}
+              options={{
+                paging: false,
+                sorting: false,
+                search: false,
+                headerStyle: {
+                  backgroundColor: "#ff9800",
+                  color: "#FFF",
+                },
+              }}
+            />
+          </Grid>
+        </>
+      )}
+    </Grid>
+  );
+};
 
 export default PlayerDisplay;
