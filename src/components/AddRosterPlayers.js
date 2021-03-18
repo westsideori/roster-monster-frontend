@@ -248,7 +248,7 @@ const AddRosterPlayers = ({ players, isNewRoster, currentUser }) => {
   return (
     <Grid container justify="center" alignItems="center" direction="column">
       {currentRoster ? (
-        <>
+        <Grid item xs={12}>
           <Typography variant="h3" color="primary">
             Add Players To Roster
           </Typography>
@@ -278,7 +278,7 @@ const AddRosterPlayers = ({ players, isNewRoster, currentUser }) => {
           >
             Save
           </Button>
-        </>
+        </Grid>
       ) : (
         <Grid container item xs={12} justify="center">
           <Grid item>
